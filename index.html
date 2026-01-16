@@ -3,21 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kopfrechnen – Addition & Multiplikation (1. Klasse)</title>
+  <title>Kopfrechnen – Addition & Multiplikation</title>
   <style>
     :root{
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:#f3f4f6;
-      --card:#ffffff;
-      --text:#111827;
-      --muted:#6b7280;
+      --text:#0f172a;
+      --muted:#475569;
+      --card:#ffffffcc; /* leicht transparent */
       --line:#d1d5db;
-      --brand:#2563eb;
-      --ok:#15803d;
-      --bad:#b91c1c;
+
+      --blue:#2563eb;
+      --green:#16a34a;
+      --red:#dc2626;
+      --yellow:#f59e0b;
+      --purple:#7c3aed;
+      --pink:#db2777;
+      --teal:#0ea5e9;
+
+      --shadow: 0 12px 30px rgba(2,6,23,0.10);
       --star:#facc15;
-      --shadow: 0 10px 30px rgba(0,0,0,0.10);
     }
+
+    /* Sanfter Hintergrund (Pastell) */
     body{
       margin:0;
       min-height:100vh;
@@ -26,146 +33,183 @@
       justify-content:center;
       padding:14px;
       color:var(--text);
-    }
-    .app{
-      background:var(--card);
-      border-radius:20px;
-      box-shadow:var(--shadow);
-      padding:16px 18px;
-      width:min(980px, 100%);
-      box-sizing:border-box;
+      background:
+        radial-gradient(900px 600px at 10% 20%, #e0f2fe 0%, transparent 60%),
+        radial-gradient(900px 600px at 90% 30%, #fce7f3 0%, transparent 60%),
+        radial-gradient(900px 600px at 60% 90%, #dcfce7 0%, transparent 60%),
+        linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #fdf2f8 100%);
     }
 
-    /* Tablet / Querformat: kompakter, breiter */
+    .app{
+      width:min(980px, 100%);
+      background:var(--card);
+      border:2px solid rgba(255,255,255,0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      padding:16px 18px;
+      box-sizing:border-box;
+    }
     @media (min-width: 820px){
       .app{ padding:18px 22px; }
     }
 
+    /* Header */
     .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      margin-bottom:8px;
+      margin-bottom:10px;
+    }
+    .titleWrap{
+      display:flex;
+      align-items:center;
+      gap:10px;
     }
     h1{
       margin:0;
-      font-size:1.25rem;
+      font-size:1.35rem;
       line-height:1.1;
+      font-weight:1100;
+      letter-spacing:0.2px;
     }
-    .mini{
-      font-size:0.95rem;
-      color:var(--muted);
-      font-weight:600;
-      white-space:nowrap;
+    .infoBtn{
+      width:42px;
+      height:42px;
+      border-radius:999px;
+      border:2px solid rgba(37,99,235,0.25);
+      background: rgba(37,99,235,0.12);
+      color: var(--blue);
+      font-weight:1100;
+      font-size:1.15rem;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      user-select:none;
+      touch-action: manipulation;
+      transition: transform 0.05s ease, background 0.15s ease;
+    }
+    .infoBtn:active{ transform: translateY(1px); }
+    .infoBtn.on{
+      background: rgba(37,99,235,0.20);
+      border-color: rgba(37,99,235,0.35);
     }
 
-    .subtitle{
+    /* Wenig Text – nur wenn Info AN */
+    .help{
       margin:6px 0 12px;
       color:var(--muted);
-      font-size:0.95rem;
+      font-size:0.98rem;
       line-height:1.25;
     }
+    .hidden{ display:none !important; }
 
-    .grid{
-      display:grid;
-      gap:10px;
-    }
+    /* Layout */
+    .grid{ display:grid; gap:10px; }
     .grid.two{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .grid.three{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
     @media (max-width: 640px){
       .grid.two, .grid.three{ grid-template-columns: 1fr; }
     }
 
+    .card{
+      border:2px solid rgba(15,23,42,0.08);
+      border-radius:20px;
+      padding:12px;
+      background: rgba(255,255,255,0.82);
+    }
+
+    /* Buttons – bunter */
     .btn{
-      border:2px solid var(--line);
-      background:#f9fafb;
+      border:2px solid rgba(15,23,42,0.10);
       border-radius:18px;
       padding:12px 10px;
       font-size:1.05rem;
-      font-weight:800;
+      font-weight:1000;
       cursor:pointer;
-      transition: transform 0.05s ease, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
       user-select:none;
       touch-action: manipulation;
+      transition: transform 0.05s ease, filter 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+      box-shadow: 0 10px 18px rgba(2,6,23,0.08);
+      background: #f9fafb;
     }
     .btn:active{ transform: translateY(1px); }
-    .btn:hover{ background:#eef2ff; border-color:#a5b4fc; }
     .btn.selected{
-      background: var(--brand);
-      border-color: #1d4ed8;
-      color:white;
-      box-shadow: 0 8px 18px rgba(37,99,235,0.30);
+      outline: 3px solid rgba(255,255,255,0.55);
+      filter: saturate(1.15);
+      box-shadow: 0 16px 28px rgba(2,6,23,0.12);
     }
-    .btn.primary{
+
+    /* Farbschemata */
+    .c-blue{ background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%); }
+    .c-pink{ background: linear-gradient(135deg, #fce7f3 0%, #f9a8d4 100%); }
+    .c-green{ background: linear-gradient(135deg, #dcfce7 0%, #86efac 100%); }
+    .c-yellow{ background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%); }
+    .c-purple{ background: linear-gradient(135deg, #ede9fe 0%, #c4b5fd 100%); }
+    .c-teal{ background: linear-gradient(135deg, #cffafe 0%, #67e8f9 100%); }
+
+    .primary{
       width:100%;
       border:none;
-      background: var(--brand);
-      color:white;
       border-radius:999px;
-      font-size:1.15rem;
       padding:12px 14px;
-      font-weight:900;
+      font-size:1.18rem;
+      font-weight:1100;
+      color:white;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      box-shadow: 0 18px 30px rgba(37,99,235,0.22);
     }
-    .btn.primary:hover{ background:#1d4ed8; }
-    .btn.primary:disabled{
-      background:#9ca3af;
+    .primary:disabled{
+      opacity:0.55;
       cursor:not-allowed;
       box-shadow:none;
     }
-    .btn.ghost{
+    .ghost{
       width:100%;
       border-radius:999px;
       padding:11px 14px;
-      font-weight:800;
-      background:#f9fafb;
+      font-weight:1000;
+      background: rgba(255,255,255,0.75);
+      box-shadow:none;
     }
 
-    .pillrow{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      align-items:center;
-      justify-content:flex-start;
-      margin-top:10px;
+    .rowNote{
+      text-align:center;
+      font-weight:900;
+      color:var(--muted);
+      min-height:1.2rem;
+      margin-top:6px;
     }
+
+    /* Zeit-Buttons */
+    .pillrow{ display:flex; flex-wrap:wrap; gap:10px; }
     .pill{
       display:inline-flex;
       gap:8px;
       align-items:center;
-      border:2px solid var(--line);
-      background:#f9fafb;
+      border:2px solid rgba(15,23,42,0.10);
+      background: rgba(255,255,255,0.80);
       border-radius:999px;
       padding:10px 12px;
       cursor:pointer;
-      font-weight:900;
+      font-weight:1100;
       user-select:none;
       touch-action: manipulation;
+      box-shadow: 0 10px 18px rgba(2,6,23,0.06);
     }
     .pill.selected{
-      background:#ecfeff;
-      border-color:#22d3ee;
-      box-shadow: 0 8px 18px rgba(34,211,238,0.15);
+      border-color: rgba(14,165,233,0.35);
+      background: rgba(14,165,233,0.14);
     }
     .icon{
       width:22px; height:22px;
-      display:inline-grid;
-      place-items:center;
+      display:inline-grid; place-items:center;
       border-radius:999px;
-      background:#e5e7eb;
+      background: rgba(15,23,42,0.08);
       font-size:14px;
     }
-    .pill.selected .icon{ background:#cffafe; }
-
-    .info{
-      min-height:1.2rem;
-      color:var(--muted);
-      font-weight:700;
-      text-align:center;
-      margin-top:8px;
-    }
-
-    .hidden{ display:none !important; }
 
     /* Quiz */
     .quiz-layout{
@@ -180,75 +224,38 @@
       }
     }
 
-    .card{
-      border:2px solid var(--line);
-      border-radius:18px;
-      padding:12px;
-      background:#ffffff;
+    .tag{
+      display:inline-block;
+      border-radius:999px;
+      padding:4px 10px;
+      font-size:0.92rem;
+      font-weight:1100;
+      background: rgba(37,99,235,0.12);
+      color: #1d4ed8;
+    }
+    .mini{
+      font-size:0.95rem;
+      color:var(--muted);
+      font-weight:1000;
+      white-space:nowrap;
     }
 
     .equation{
-      font-size: clamp(2.2rem, 4vw, 3.0rem);
-      font-weight:1000;
+      font-size: clamp(2.4rem, 4.2vw, 3.2rem);
+      font-weight:1200;
       text-align:center;
       margin:10px 0 4px;
       letter-spacing: 0.5px;
     }
 
-    .tag{
-      display:inline-block;
-      border-radius:999px;
-      padding:4px 10px;
-      font-size:0.9rem;
-      font-weight:900;
-      background:#eff6ff;
-      color:#1d4ed8;
-      margin:0 auto;
-    }
-
-    .options{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap:10px;
-      margin-top:10px;
-    }
-    .opt{
-      border:2px solid var(--line);
-      background:#f9fafb;
-      border-radius:18px;
-      padding:14px 10px;
-      font-size:1.35rem;
-      font-weight:1000;
-      cursor:pointer;
-      transition: transform 0.05s ease, background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-      user-select:none;
-      touch-action: manipulation;
-    }
-    .opt:hover{ background:#e5e7eb; }
-    .opt:active{ transform: translateY(1px); }
-    .opt.disabled{
-      opacity:0.6;
-      cursor:not-allowed;
-    }
-
-    .feedback{
-      min-height:1.4rem;
-      text-align:center;
-      font-weight:1000;
-      margin-top:8px;
-      font-size:1.05rem;
-    }
-    .feedback.ok{ color:var(--ok); }
-    .feedback.bad{ color:var(--bad); }
-
-    /* Timer bar */
+    /* Timer */
     .timerWrap{
       margin-top:8px;
       height:16px;
-      background:#e5e7eb;
+      background: rgba(15,23,42,0.08);
       border-radius:999px;
       overflow:hidden;
-      border:2px solid var(--line);
+      border:2px solid rgba(15,23,42,0.10);
     }
     .timerBar{
       height:100%;
@@ -257,54 +264,75 @@
       transition: width 0.08s linear;
     }
 
-    /* Score scale -5 .. +5 with dot */
-    .scoreWrap{
+    /* MC */
+    .options{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:10px;
       margin-top:10px;
     }
+    .opt{
+      border:2px solid rgba(15,23,42,0.10);
+      background: rgba(255,255,255,0.75);
+      border-radius:18px;
+      padding:14px 10px;
+      font-size:1.45rem;
+      font-weight:1200;
+      cursor:pointer;
+      user-select:none;
+      touch-action: manipulation;
+      box-shadow: 0 10px 18px rgba(2,6,23,0.06);
+      transition: transform 0.05s ease, filter 0.15s ease;
+    }
+    .opt:hover{ filter: brightness(0.98) saturate(1.05); }
+    .opt:active{ transform: translateY(1px); }
+    .opt.disabled{ opacity:0.6; cursor:not-allowed; }
+
+    /* Feedback */
+    .feedback{
+      min-height:1.4rem;
+      text-align:center;
+      font-weight:1200;
+      margin-top:8px;
+      font-size:1.08rem;
+    }
+    .feedback.ok{ color:var(--green); }
+    .feedback.bad{ color:var(--red); }
+
+    /* Score scale */
+    .scoreWrap{ margin-top:10px; }
     .scoreTitle{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      font-weight:1000;
-      color:var(--muted);
-      font-size:0.95rem;
+      display:flex; justify-content:space-between; align-items:center;
+      font-weight:1100; color:var(--muted); font-size:0.95rem;
       margin-bottom:6px;
     }
     .scale{
       position:relative;
       height:16px;
       border-radius:999px;
-      border:2px solid var(--line);
-      background: linear-gradient(90deg, #fee2e2 0%, #f3f4f6 50%, #dcfce7 100%);
+      border:2px solid rgba(15,23,42,0.10);
+      background: linear-gradient(90deg, rgba(220,38,38,0.16) 0%, rgba(15,23,42,0.06) 50%, rgba(22,163,74,0.18) 100%);
       overflow:hidden;
     }
     .midline{
       position:absolute;
-      left:50%;
-      top:0;
-      width:3px;
-      height:100%;
-      background:#9ca3af;
-      opacity:0.7;
+      left:50%; top:0; width:3px; height:100%;
+      background: rgba(100,116,139,0.8);
       transform: translateX(-50%);
     }
     .dot{
       position:absolute;
       top:50%;
-      width:18px;
-      height:18px;
+      width:18px; height:18px;
       border-radius:999px;
-      background:#111827;
+      background:#0f172a;
       transform: translate(-50%, -50%);
-      box-shadow: 0 6px 14px rgba(0,0,0,0.20);
-      border:2px solid #ffffff;
+      box-shadow: 0 10px 18px rgba(2,6,23,0.18);
+      border:2px solid rgba(255,255,255,0.9);
     }
     .scaleLabels{
-      display:flex;
-      justify-content:space-between;
-      font-size:0.9rem;
-      color:var(--muted);
-      font-weight:900;
+      display:flex; justify-content:space-between;
+      font-size:0.9rem; color:var(--muted); font-weight:1100;
       margin-top:6px;
     }
 
@@ -318,22 +346,15 @@
     }
     .scoreBox{
       flex:1;
-      border:2px solid var(--line);
-      background:#f9fafb;
+      border:2px solid rgba(15,23,42,0.10);
+      background: rgba(255,255,255,0.75);
       border-radius:18px;
       padding:10px;
       text-align:center;
+      box-shadow: 0 10px 18px rgba(2,6,23,0.06);
     }
-    .scoreBox .label{
-      color:var(--muted);
-      font-weight:1000;
-      font-size:0.95rem;
-    }
-    .scoreBox .num{
-      font-size:2.0rem;
-      font-weight:1100;
-      margin-top:2px;
-    }
+    .scoreBox .label{ color:var(--muted); font-weight:1100; font-size:0.95rem; }
+    .scoreBox .num{ font-size:2.05rem; font-weight:1300; margin-top:2px; }
 
     /* Keypad */
     .answerLine{
@@ -344,12 +365,12 @@
     }
     .answerDisplay{
       flex:1;
-      border:2px solid var(--line);
+      border:2px solid rgba(15,23,42,0.10);
       border-radius:18px;
-      background:#f9fafb;
+      background: rgba(255,255,255,0.75);
       padding:12px;
-      font-size:1.6rem;
-      font-weight:1100;
+      font-size:1.7rem;
+      font-weight:1300;
       text-align:center;
       letter-spacing:2px;
       user-select:none;
@@ -357,15 +378,16 @@
       display:flex;
       align-items:center;
       justify-content:center;
+      box-shadow: 0 10px 18px rgba(2,6,23,0.06);
     }
     .submitBtn{
-      width:120px;
+      width:130px;
       border:none;
       border-radius:18px;
-      background: var(--ok);
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
       color:white;
-      font-weight:1100;
-      font-size:1.1rem;
+      font-weight:1300;
+      font-size:1.12rem;
       cursor:pointer;
       user-select:none;
       touch-action: manipulation;
@@ -373,23 +395,18 @@
       align-items:center;
       justify-content:center;
       gap:8px;
-      box-shadow: 0 10px 20px rgba(21,128,61,0.25);
+      box-shadow: 0 16px 26px rgba(21,128,61,0.22);
+      transition: transform 0.05s ease, opacity 0.15s ease;
     }
     .submitBtn:active{ transform: translateY(1px); }
-    .submitBtn:disabled{
-      background:#9ca3af;
-      cursor:not-allowed;
-      box-shadow:none;
-    }
+    .submitBtn:disabled{ opacity:0.55; cursor:not-allowed; box-shadow:none; }
     .submitIcon{
       width:22px; height:22px;
       border-radius:999px;
       background: rgba(255,255,255,0.25);
-      display:grid;
-      place-items:center;
+      display:grid; place-items:center;
       font-size:14px;
     }
-
     .keypad{
       margin-top:10px;
       display:grid;
@@ -397,24 +414,23 @@
       gap:10px;
     }
     .key{
-      border:2px solid var(--line);
-      background:#f9fafb;
+      border:2px solid rgba(15,23,42,0.10);
+      background: rgba(255,255,255,0.75);
       border-radius:18px;
       padding:14px 10px;
-      font-size:1.55rem;
-      font-weight:1100;
+      font-size:1.6rem;
+      font-weight:1300;
       cursor:pointer;
       user-select:none;
       touch-action: manipulation;
+      box-shadow: 0 10px 18px rgba(2,6,23,0.06);
+      transition: transform 0.05s ease;
     }
-    .key:hover{ background:#e5e7eb; }
     .key:active{ transform: translateY(1px); }
     .key.small{ font-size:1.2rem; }
 
-    /* Stars */
     .stars{
-      display:inline-flex;
-      gap:2px;
+      display:inline-flex; gap:2px;
       margin-right:6px;
       vertical-align:middle;
     }
@@ -429,82 +445,74 @@
 <body>
 <div class="app">
   <div class="topbar">
-    <h1>Kopfrechnen</h1>
-    <div class="mini" id="top-mini">Addition & Multiplikation</div>
+    <div class="titleWrap">
+      <h1>Kopfrechnen</h1>
+      <button class="infoBtn on" id="infoBtn" title="Info ein/aus">i</button>
+    </div>
+    <div class="mini" id="topMini">Addition & Multiplikation</div>
+  </div>
+
+  <div class="help" id="helpText">
+    1) Wähle <strong>Training</strong> oder <strong>Wettkampf</strong>.<br>
+    2) Wähle die <strong>Zeit</strong> (nur im Wettkampf).<br>
+    3) Wähle die <strong>Sterne</strong>. Los!
   </div>
 
   <!-- START -->
   <div id="start">
-    <div class="subtitle">
-      Wähle <strong>Modus</strong>, <strong>Zeit</strong> und <strong>Schwierigkeit</strong>.
-      Für die 1. Klasse: grosse Buttons, Tablet-optimiert (Querformat).
-    </div>
-
     <div class="grid two">
       <div class="card">
-        <div style="font-weight:1100; margin-bottom:8px;">1) Modus</div>
+        <div style="font-weight:1200; margin-bottom:8px;">Modus</div>
         <div class="grid two">
-          <button class="btn modeBtn" data-mode="train">Training (ohne Zeitdruck)</button>
-          <button class="btn modeBtn" data-mode="battle">Wettkampf vs. Computer</button>
+          <button class="btn c-teal modeBtn" data-mode="train">Training</button>
+          <button class="btn c-purple modeBtn" data-mode="battle">Wettkampf</button>
         </div>
 
         <div id="battleSettings" class="hidden" style="margin-top:10px;">
-          <div style="font-weight:1100; margin-bottom:8px;">Wettkampf: Spiel-Länge</div>
+          <div style="font-weight:1200; margin-bottom:8px;">Spiel</div>
           <div class="grid three">
-            <button class="btn matchBtn" data-match="5">Kurz (Best of 5)</button>
-            <button class="btn matchBtn" data-match="7">Mittel (Best of 7)</button>
-            <button class="btn matchBtn" data-match="9">Lang (Best of 9)</button>
-          </div>
-          <div class="subtitle" style="margin:8px 0 0;">
-            Eine Runde endet bei <strong>+5</strong> (du) oder <strong>-5</strong> (Computer).
+            <button class="btn c-yellow matchBtn" data-match="5">Kurz</button>
+            <button class="btn c-pink matchBtn" data-match="7">Mittel</button>
+            <button class="btn c-blue matchBtn" data-match="9">Lang</button>
           </div>
         </div>
       </div>
 
       <div class="card">
-        <div style="font-weight:1100; margin-bottom:8px;">2) Antwort-Zeit</div>
+        <div style="font-weight:1200; margin-bottom:8px;">Zeit</div>
         <div class="pillrow" id="timeRow">
           <div class="pill timeBtn" data-time="3"><span class="icon">⏱️</span>3 s</div>
           <div class="pill timeBtn" data-time="5"><span class="icon">⏱️</span>5 s</div>
           <div class="pill timeBtn" data-time="10"><span class="icon">⏱️</span>10 s</div>
         </div>
-        <div class="subtitle" style="margin:10px 0 0;">
-          Im Training wird die Zeit <strong>nicht</strong> runtergezählt – im Wettkampf schon.
-        </div>
       </div>
     </div>
 
     <div class="card" style="margin-top:10px;">
-      <div style="font-weight:1100; margin-bottom:8px;">3) Schwierigkeit</div>
+      <div style="font-weight:1200; margin-bottom:8px;">Sterne</div>
       <div class="grid two">
-        <button class="btn diffBtn" data-diff="1">
+        <button class="btn c-green diffBtn" data-diff="1">
           <span class="stars"><span class="star">★</span></span>
-          Einfach (0–20, ohne Zehnerübergang, MC)
+          1 Stern
         </button>
-        <button class="btn diffBtn" data-diff="2">
+        <button class="btn c-yellow diffBtn" data-diff="2">
           <span class="stars"><span class="star">★</span><span class="star">★</span></span>
-          Mittel (0–20, mit Zehnerübergang, MC)
+          2 Sterne
         </button>
-        <button class="btn diffBtn" data-diff="3">
+        <button class="btn c-blue diffBtn" data-diff="3">
           <span class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span></span>
-          Schwierig (bis 100, nur 10er, Ziffernblock)
+          3 Sterne
         </button>
-        <button class="btn diffBtn" data-diff="4">
+        <button class="btn c-pink diffBtn" data-diff="4">
           <span class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></span>
-          Sehr schwierig (bis 100, Ziffernblock)
+          4 Sterne
         </button>
       </div>
 
-      <div class="info" id="startInfo">Bitte alles auswählen.</div>
+      <div class="rowNote" id="startInfo">Bitte wählen.</div>
 
-      <button class="btn primary" id="startBtn" disabled>Los geht’s! 🚀</button>
-      <button class="btn ghost" id="resetBtn">Zurücksetzen</button>
-    </div>
-
-    <div class="subtitle" style="margin-top:10px;">
-      Audio: <code>audio/correct.wav</code>, <code>audio/error.wav</code>, <code>audio/roundwon.wav</code>,
-      <code>audio/roundlost.wav</code>, <code>audio/gamewon.wav</code>, <code>audio/gamelost.wav</code>
-      (Ordner <code>audio</code> mit <code>.gitkeep</code>).
+      <button class="btn primary" id="startBtn" disabled>Los! 🚀</button>
+      <button class="btn ghost" id="resetBtn">Reset</button>
     </div>
   </div>
 
@@ -512,26 +520,22 @@
   <div id="quiz" class="hidden">
     <div class="quiz-layout">
 
-      <!-- Left: question -->
       <div class="card">
         <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
           <div class="tag" id="modeTag">—</div>
-          <div class="mini" id="taskCounter">Aufgabe 1</div>
+          <div class="mini" id="taskCounter">Aufgabe</div>
         </div>
 
         <div class="equation" id="eq">__</div>
 
-        <!-- timer -->
         <div id="timerArea" class="hidden">
           <div class="timerWrap" aria-label="Zeitbalken">
             <div class="timerBar" id="timerBar"></div>
           </div>
         </div>
 
-        <!-- MC options -->
         <div id="mcArea" class="options hidden"></div>
 
-        <!-- Keypad -->
         <div id="keypadArea" class="hidden">
           <div class="answerLine">
             <div class="answerDisplay" id="answerDisplay">—</div>
@@ -539,24 +543,20 @@
               <span class="submitIcon">✓</span> OK
             </button>
           </div>
-          <div class="keypad" id="keypad">
-            <!-- keys filled by JS -->
-          </div>
+          <div class="keypad" id="keypad"></div>
         </div>
 
         <div class="feedback" id="fb"></div>
 
         <div style="display:flex; gap:10px; margin-top:10px;">
-          <button class="btn ghost" id="quitBtn">Zurück ins Menü</button>
-          <button class="btn ghost" id="nextBtn" class="hidden">Weiter</button>
+          <button class="btn ghost" id="quitBtn">Menü</button>
         </div>
       </div>
 
-      <!-- Right: stats / scoreboard -->
       <div class="card">
-        <div style="font-weight:1100;">Anzeige</div>
+        <div style="font-weight:1200;">Anzeige</div>
 
-        <div class="scoreboard" id="battleBoard" class="hidden">
+        <div class="scoreboard hidden" id="battleBoard">
           <div class="scoreBox">
             <div class="label">DU</div>
             <div class="num" id="roundsYou">0</div>
@@ -571,9 +571,9 @@
           </div>
         </div>
 
-        <div class="scoreWrap" id="scoreWrap">
+        <div class="scoreWrap">
           <div class="scoreTitle">
-            <span>Zwischenstand</span>
+            <span>Punkte</span>
             <span id="scoreText">0</span>
           </div>
           <div class="scale">
@@ -581,28 +581,21 @@
             <div class="dot" id="scoreDot" style="left:50%;"></div>
           </div>
           <div class="scaleLabels">
-            <span>-5 (PC)</span>
-            <span>0</span>
-            <span>+5 (DU)</span>
+            <span>-5</span><span>0</span><span>+5</span>
           </div>
         </div>
 
-        <div class="card" style="margin-top:10px; background:#f9fafb;">
+        <div class="card" style="margin-top:10px; background: rgba(255,255,255,0.55);">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
-            <div style="font-weight:1100;">Trefferquote</div>
+            <div style="font-weight:1200;">Richtig</div>
             <div class="tag" id="diffTag">—</div>
           </div>
-          <div style="margin-top:8px; font-weight:1000;">
-            Richtig: <span id="sRight">0</span> / <span id="sTotal">0</span>
+          <div style="margin-top:8px; font-weight:1200;">
+            <span id="sRight">0</span> / <span id="sTotal">0</span>
           </div>
-          <div style="margin-top:4px; color:var(--muted); font-weight:900;">
-            Prozent (für LP): <span id="sPct">0%</span>
+          <div style="margin-top:4px; color:var(--muted); font-weight:1100;">
+            <span id="sPct">0%</span>
           </div>
-        </div>
-
-        <div class="subtitle" style="margin-top:10px;">
-          Tipp: Im Wettkampf zählt jede Aufgabe direkt zum Punktestand.
-          Bei Zeitablauf zählt es als falsch.
         </div>
       </div>
 
@@ -613,14 +606,14 @@
   <div id="result" class="hidden">
     <div class="card" style="text-align:center;">
       <h2 style="margin:0 0 6px;">Fertig! 🎉</h2>
-      <p id="summary" style="margin:0; font-weight:900;"></p>
-      <p style="margin:10px 0 0; color:var(--muted); font-weight:700;">
-        Prozent (für LP): <strong><span id="summaryPct">0%</span></strong>
+      <p id="summary" style="margin:0; font-weight:1100;"></p>
+      <p style="margin:10px 0 0; color:var(--muted); font-weight:1000;">
+        <strong><span id="summaryPct">0%</span></strong>
       </p>
 
       <div style="margin-top:12px;" class="grid two">
-        <button class="btn primary" id="playAgainBtn">Nochmal spielen</button>
-        <button class="btn ghost" id="backBtn">Zurück ins Menü</button>
+        <button class="btn primary" id="playAgainBtn">Nochmal</button>
+        <button class="btn ghost" id="backBtn">Menü</button>
       </div>
     </div>
   </div>
@@ -628,9 +621,8 @@
 
 <script>
 /* =========================
-   Kopfrechnen – Logik
+   Audio
    ========================= */
-
 const AUDIO = {
   correct: new Audio('audio/correct.wav'),
   error: new Audio('audio/error.wav'),
@@ -639,26 +631,24 @@ const AUDIO = {
   gamewon: new Audio('audio/gamewon.wav'),
   gamelost: new Audio('audio/gamelost.wav'),
 };
-
 function playSound(key){
   const a = AUDIO[key];
   if(!a) return;
-  try{
-    a.currentTime = 0;
-    a.play().catch(()=>{});
-  }catch(e){}
+  try{ a.currentTime=0; a.play().catch(()=>{}); }catch(e){}
 }
 
-/* ----- State ----- */
+/* =========================
+   State
+   ========================= */
 let mode = null;            // 'train' | 'battle'
-let matchBestOf = 5;        // 5|7|9 (nur battle)
+let matchBestOf = 5;        // 5|7|9
 let answerTime = 5;         // 3|5|10
 let diff = null;            // 1..4
 
 let totalTasks = 0;
 let correctCount = 0;
 
-let current = null;         // {a,b,op,correct,text,answerType:'mc'|'keypad', options[]}
+let current = null;         // {text, correct, answerType, options?}
 let locked = false;
 
 let timerOn = false;
@@ -666,15 +656,16 @@ let timerId = null;
 let timerStart = 0;
 let timerLimitMs = 0;
 
-let score = 0;              // -5..+5 (battle round score)
+let score = 0;
 let roundsYou = 0;
 let roundsPc = 0;
 let roundNo = 1;
 
-/* Training: wir nehmen eine “Session” mit fixen Aufgaben */
-const TRAIN_TOTAL = 20;     // gut für Kinder: kurz, motivierend
+const TRAIN_TOTAL = 20;
 
-/* ----- DOM ----- */
+/* =========================
+   DOM
+   ========================= */
 const startEl = document.getElementById('start');
 const quizEl = document.getElementById('quiz');
 const resultEl = document.getElementById('result');
@@ -682,7 +673,6 @@ const resultEl = document.getElementById('result');
 const startInfo = document.getElementById('startInfo');
 const startBtn = document.getElementById('startBtn');
 const resetBtn = document.getElementById('resetBtn');
-
 const battleSettings = document.getElementById('battleSettings');
 
 const modeTag = document.getElementById('modeTag');
@@ -719,12 +709,24 @@ const summaryPct = document.getElementById('summaryPct');
 const playAgainBtn = document.getElementById('playAgainBtn');
 const backBtn = document.getElementById('backBtn');
 
+/* Info toggle */
+const infoBtn = document.getElementById('infoBtn');
+const helpText = document.getElementById('helpText');
+let showHelp = true;
+infoBtn.addEventListener('click', ()=>{
+  showHelp = !showHelp;
+  helpText.classList.toggle('hidden', !showHelp);
+  infoBtn.classList.toggle('on', showHelp);
+});
+
+/* =========================
+   Start selection handlers
+   ========================= */
 function setSelected(groupSelector, selectedEl){
   document.querySelectorAll(groupSelector).forEach(el => el.classList.remove('selected'));
   if(selectedEl) selectedEl.classList.add('selected');
 }
 
-/* ----- Start selections ----- */
 document.querySelectorAll('.modeBtn').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     mode = btn.dataset.mode;
@@ -762,7 +764,6 @@ document.querySelectorAll('.diffBtn').forEach(btn=>{
 resetBtn.addEventListener('click', ()=>{
   mode = null; diff = null; answerTime = 5; matchBestOf = 5;
   document.querySelectorAll('.modeBtn,.matchBtn,.timeBtn,.diffBtn').forEach(x=>x.classList.remove('selected'));
-  // default time select 5s
   document.querySelectorAll('.timeBtn').forEach(x=>{
     if(parseInt(x.dataset.time,10)===5) x.classList.add('selected');
   });
@@ -770,55 +771,46 @@ resetBtn.addEventListener('click', ()=>{
   updateStartReady();
 });
 
-function diffLabel(d){
-  const stars = "★".repeat(d);
-  if(d===1) return `${stars} Einfach`;
-  if(d===2) return `${stars} Mittel`;
-  if(d===3) return `${stars} Schwierig`;
-  return `${stars} Sehr schwierig`;
-}
-
-function updateStartReady(){
-  let msg = [];
-  if(!mode) msg.push("Modus");
-  if(!diff) msg.push("Schwierigkeit");
-  if(mode === 'battle' && !matchBestOf) msg.push("Spiel-Länge");
-
-  if(msg.length){
-    startInfo.textContent = "Bitte auswählen: " + msg.join(", ") + ".";
-    startBtn.disabled = true;
-    return;
-  }
-
-  const timeText = (mode === 'battle') ? `${answerTime}s pro Aufgabe` : `ohne Zeitdruck (Zeitwahl egal)`;
-  startInfo.textContent = `Bereit: ${mode==='train'?'Training':'Wettkampf'} · ${timeText} · ${diffLabel(diff)}`;
-  startBtn.disabled = false;
-}
-
-/* default time 5s selected */
+/* Default: 5s ausgewählt */
 (function init(){
   document.querySelectorAll('.timeBtn').forEach(x=>{
     if(parseInt(x.dataset.time,10)===5) x.classList.add('selected');
   });
-  updateStartReady();
   buildKeypad();
   setScoreDot(0);
+  updateStartReady();
 })();
 
-/* ----- Navigation ----- */
+function diffLabel(d){
+  if(d===1) return "★";
+  if(d===2) return "★★";
+  if(d===3) return "★★★";
+  return "★★★★";
+}
+
+function updateStartReady(){
+  let missing = [];
+  if(!mode) missing.push("Modus");
+  if(!diff) missing.push("Sterne");
+  if(missing.length){
+    startInfo.textContent = "Bitte wählen: " + missing.join(", ");
+    startBtn.disabled = true;
+    return;
+  }
+  startInfo.textContent = "Bereit!";
+  startBtn.disabled = false;
+}
+
+/* =========================
+   Navigation
+   ========================= */
 startBtn.addEventListener('click', startGame);
 quitBtn.addEventListener('click', ()=>{
   stopTimer();
   showScreen('start');
 });
-
-playAgainBtn.addEventListener('click', ()=>{
-  showScreen('start');
-});
-
-backBtn.addEventListener('click', ()=>{
-  showScreen('start');
-});
+playAgainBtn.addEventListener('click', ()=> showScreen('start'));
+backBtn.addEventListener('click', ()=> showScreen('start'));
 
 function showScreen(which){
   startEl.classList.toggle('hidden', which!=='start');
@@ -829,7 +821,6 @@ function showScreen(which){
 /* =========================
    Game flow
    ========================= */
-
 function startGame(){
   correctCount = 0;
   totalTasks = 0;
@@ -838,8 +829,7 @@ function startGame(){
   fb.className = 'feedback';
 
   if(mode === 'battle'){
-    roundsYou = 0; roundsPc = 0; roundNo = 1;
-    score = 0;
+    roundsYou = 0; roundsPc = 0; roundNo = 1; score = 0;
     battleBoard.classList.remove('hidden');
     roundsYouEl.textContent = '0';
     roundsPcEl.textContent = '0';
@@ -852,7 +842,7 @@ function startGame(){
   updateStats();
   updateScoreUI();
 
-  modeTag.textContent = (mode==='train') ? 'Training' : `Wettkampf (Best of ${matchBestOf})`;
+  modeTag.textContent = (mode==='train') ? 'Training' : 'Wettkampf';
   diffTag.textContent = diffLabel(diff);
 
   showScreen('quiz');
@@ -865,21 +855,18 @@ function nextTask(){
   fb.textContent = '';
   fb.className = 'feedback';
 
-  // Training endet nach TRAIN_TOTAL Aufgaben
   if(mode === 'train' && totalTasks >= TRAIN_TOTAL){
     endSession();
     return;
   }
 
   current = generateTask(diff);
-
   eq.textContent = current.text;
 
-  // Anzeige Task counter
   if(mode === 'train'){
-    taskCounter.textContent = `Aufgabe ${totalTasks+1} von ${TRAIN_TOTAL}`;
+    taskCounter.textContent = `Aufgabe ${totalTasks+1}/${TRAIN_TOTAL}`;
   } else {
-    taskCounter.textContent = `Runde ${roundNo} · Aufgabe ${totalTasks+1}`;
+    taskCounter.textContent = `Runde ${roundNo}`;
   }
 
   if(current.answerType === 'mc'){
@@ -892,7 +879,6 @@ function nextTask(){
     resetAnswerInput();
   }
 
-  // Timer nur im Wettkampf
   if(mode === 'battle'){
     timerArea.classList.remove('hidden');
     startTimer(answerTime);
@@ -906,7 +892,7 @@ function endSession(finalSoundKey){
   if(finalSoundKey) playSound(finalSoundKey);
 
   const pct = totalTasks ? Math.round((correctCount/totalTasks)*100) : 0;
-  summary.textContent = `Richtig: ${correctCount} von ${totalTasks}.`;
+  summary.textContent = `${correctCount} / ${totalTasks}`;
   summaryPct.textContent = `${pct}%`;
   showScreen('result');
 }
@@ -914,18 +900,15 @@ function endSession(finalSoundKey){
 /* =========================
    Timer
    ========================= */
-
 function startTimer(seconds){
   timerOn = true;
   timerStart = performance.now();
   timerLimitMs = seconds * 1000;
 
-  // initial bar
   timerBar.style.width = '100%';
-  timerBar.style.background = '#16a34a'; // grün
+  timerBar.style.background = '#16a34a';
   timerId = requestAnimationFrame(tickTimer);
 }
-
 function tickTimer(now){
   if(!timerOn) return;
   const elapsed = now - timerStart;
@@ -934,24 +917,17 @@ function tickTimer(now){
 
   timerBar.style.width = (ratio*100).toFixed(1) + '%';
 
-  // farbe: grün -> gelb -> rot
-  if(ratio > 0.55){
-    timerBar.style.background = '#16a34a'; // grün
-  } else if(ratio > 0.25){
-    timerBar.style.background = '#f59e0b'; // gelb
-  } else {
-    timerBar.style.background = '#dc2626'; // rot
-  }
+  if(ratio > 0.55) timerBar.style.background = '#16a34a';
+  else if(ratio > 0.25) timerBar.style.background = '#f59e0b';
+  else timerBar.style.background = '#dc2626';
 
   if(left <= 0){
-    // Time up => zählt als falsch
     timerOn = false;
     onAnswer(null, {timeout:true});
     return;
   }
   timerId = requestAnimationFrame(tickTimer);
 }
-
 function stopTimer(){
   timerOn = false;
   if(timerId){
@@ -963,7 +939,6 @@ function stopTimer(){
 /* =========================
    Answer handling
    ========================= */
-
 function onAnswer(value, meta={}){
   if(locked) return;
   locked = true;
@@ -974,11 +949,11 @@ function onAnswer(value, meta={}){
 
   if(isCorrect){
     correctCount++;
-    fb.textContent = 'Richtig! 👍';
+    fb.textContent = 'Richtig!';
     fb.className = 'feedback ok';
     playSound('correct');
   } else {
-    fb.textContent = meta.timeout ? 'Zeit abgelaufen! ⏱️' : 'Leider falsch.';
+    fb.textContent = meta.timeout ? 'Zeit!' : 'Falsch!';
     fb.className = 'feedback bad';
     playSound('error');
   }
@@ -986,22 +961,19 @@ function onAnswer(value, meta={}){
   updateStats();
 
   if(mode === 'battle'){
-    // Punkte: richtig => +1 (du), falsch => -1 (PC)
     score += isCorrect ? 1 : -1;
     score = clamp(score, -5, 5);
     updateScoreUI();
 
-    // Round end?
     if(score >= 5){
       roundsYou++;
       roundsYouEl.textContent = String(roundsYou);
       playSound('roundwon');
       if(isMatchFinished()){
         playSound('gamewon');
-        setTimeout(()=>endSession(), 550);
+        setTimeout(()=>endSession(), 520);
         return;
       }
-      // nächste Runde
       roundNo++;
       roundNoEl.textContent = String(roundNo);
       score = 0;
@@ -1012,7 +984,7 @@ function onAnswer(value, meta={}){
       playSound('roundlost');
       if(isMatchFinished()){
         playSound('gamelost');
-        setTimeout(()=>endSession(), 550);
+        setTimeout(()=>endSession(), 520);
         return;
       }
       roundNo++;
@@ -1022,19 +994,9 @@ function onAnswer(value, meta={}){
     }
   }
 
-  // Nach kurzer Pause weiter
-  setTimeout(()=>{
-    if(current.answerType === 'mc'){
-      // buttons wieder aktivieren (neue Aufgabe rendert)
-    } else {
-      // keypad reset on next task
-    }
-    nextTask();
-  }, 520);
+  setTimeout(()=> nextTask(), 420);
 }
-
 function isMatchFinished(){
-  // Best of N: wer zuerst > N/2 Runden gewinnt
   const need = Math.floor(matchBestOf/2) + 1;
   return (roundsYou >= need || roundsPc >= need);
 }
@@ -1042,7 +1004,6 @@ function isMatchFinished(){
 /* =========================
    MC rendering
    ========================= */
-
 function renderMC(options){
   mcArea.innerHTML = '';
   options.forEach(v=>{
@@ -1058,33 +1019,24 @@ function renderMC(options){
 /* =========================
    Keypad
    ========================= */
-
 let typed = '';
-
 function buildKeypad(){
-  const keys = [
-    '1','2','3',
-    '4','5','6',
-    '7','8','9',
-    '⌫','0','C'
-  ];
+  const keys = ['1','2','3','4','5','6','7','8','9','⌫','0','C'];
   keypad.innerHTML = '';
   keys.forEach(k=>{
     const b = document.createElement('button');
     b.type = 'button';
-    b.className = 'key' + (k==='⌫' || k==='C' ? ' small' : '');
+    b.className = 'key' + ((k==='⌫'||k==='C') ? ' small' : '');
     b.textContent = k;
     b.addEventListener('click', ()=>pressKey(k));
     keypad.appendChild(b);
   });
 }
-
 function resetAnswerInput(){
   typed = '';
   answerDisplay.textContent = '—';
   submitBtn.disabled = true;
 }
-
 function pressKey(k){
   if(locked) return;
   if(k === 'C'){
@@ -1092,180 +1044,126 @@ function pressKey(k){
   } else if(k === '⌫'){
     typed = typed.slice(0, -1);
   } else {
-    // max 3 digits reicht für bis 100
     if(typed.length >= 3) return;
-    // Keine führenden Nullen aufblasen (aber "0" ist ok)
     if(typed === '0') typed = '';
     typed += k;
   }
-
   answerDisplay.textContent = typed.length ? typed : '—';
   submitBtn.disabled = (typed.length === 0);
 }
-
 submitBtn.addEventListener('click', ()=>{
   if(typed.length === 0) return;
-  const v = parseInt(typed, 10);
-  onAnswer(v);
+  onAnswer(parseInt(typed, 10));
 });
 
 /* =========================
-   Generator (Addition & Multiplikation)
+   Generator (WICHTIG: diff 1&2 NUR ADDITION)
    ========================= */
-
 function generateTask(d){
-  // d=1: 0..20, ohne Zehnerübergang, MC (4)
-  // d=2: 0..20, mit Zehnerübergang, MC (4)
-  // d=3: bis 100, nur Vielfache von 10, keypad
-  // d=4: bis 100, keypad
-
-  if(d === 1) return genEasyNoCarryMC();
-  if(d === 2) return genMediumCarryMC();
-  if(d === 3) return genHardTensKeypad();
-  return genVeryHardKeypad();
+  if(d === 1) return genEasyNoCarryMC();      // NUR +
+  if(d === 2) return genMediumCarryMC();      // NUR +
+  if(d === 3) return genHardTensKeypad();     // + oder ×
+  return genVeryHardKeypad();                // + oder ×
 }
 
+/* 1 Stern: 0..20 ohne Zehnerübergang, MC */
 function genEasyNoCarryMC(){
-  // Addition ohne Zehnerübergang ODER Multiplikation, Ergebnis <= 20, ohne “Carry”
-  // Für Kinder: multiplikation nur sehr klein (0..5) und Ergebnis <= 20
-  const useMul = Math.random() < 0.35;
-
-  let a,b,op,correct;
-  if(useMul){
-    op = '×';
-    while(true){
-      a = randInt(0, 5);
-      b = randInt(0, 5);
-      correct = a*b;
-      if(correct <= 20) break;
-    }
-  } else {
-    op = '+';
-    while(true){
-      a = randInt(0, 20);
-      b = randInt(0, 20);
-      // ohne Zehnerübergang: Einerstellen sum <= 9 und Ergebnis <= 20
-      if((a%10) + (b%10) <= 9 && a + b <= 20){
-        correct = a + b;
-        break;
-      }
+  let a,b,correct;
+  while(true){
+    a = randInt(0, 20);
+    b = randInt(0, 20);
+    if((a%10) + (b%10) <= 9 && a + b <= 20){
+      correct = a + b;
+      break;
     }
   }
-
-  const text = `${a} ${op} ${b} = ?`;
+  const text = `${a} + ${b} = ?`;
   const options = makeMCOptions(correct, 4, 0, 40);
-
-  return {a,b,op,correct,text,answerType:'mc',options};
+  return {text, correct, answerType:'mc', options};
 }
 
+/* 2 Sterne: 0..20 mit Zehnerübergang, MC */
 function genMediumCarryMC(){
-  // Addition mit Zehnerübergang ODER Multiplikation (klein), MC
-  const useMul = Math.random() < 0.30;
-
-  let a,b,op,correct;
-  if(useMul){
-    op = '×';
-    // etwas anspruchsvoller: 0..10, aber Ergebnis <= 20
-    while(true){
-      a = randInt(0, 10);
-      b = randInt(0, 10);
-      correct = a*b;
-      if(correct <= 20) break;
-    }
-  } else {
-    op = '+';
-    while(true){
-      a = randInt(0, 20);
-      b = randInt(0, 20);
-      const sum = a + b;
-      // mit Zehnerübergang: Einerstellen sum >= 10, Ergebnis <= 20
-      if((a%10) + (b%10) >= 10 && sum <= 20){
-        correct = sum;
-        break;
-      }
+  let a,b,correct;
+  while(true){
+    a = randInt(0, 20);
+    b = randInt(0, 20);
+    const sum = a + b;
+    if((a%10) + (b%10) >= 10 && sum <= 20){
+      correct = sum;
+      break;
     }
   }
-
-  const text = `${a} ${op} ${b} = ?`;
+  const text = `${a} + ${b} = ?`;
   const options = makeMCOptions(correct, 4, 0, 40);
-
-  return {a,b,op,correct,text,answerType:'mc',options};
+  return {text, correct, answerType:'mc', options};
 }
 
+/* 3 Sterne: bis 100, nur 10er, keypad (+ oder ×) */
 function genHardTensKeypad(){
-  // Bis 100, nur Vielfache von 10: Addition ODER Multiplikation (mit 10er)
-  // z.B. 30 + 40, 70 -? (nein, nur add/mul), 6×10, 4×20
   const useMul = Math.random() < 0.55;
-  let a,b,op,correct;
+  let a,b,correct,text;
 
   if(useMul){
-    op = '×';
     const tens = [10,20,30,40,50,60,70,80,90,100];
     while(true){
-      a = randInt(0, 10);                 // 0..10
+      a = randInt(0, 10);
       b = tens[randInt(0, tens.length-1)];
       correct = a*b;
       if(correct <= 100) break;
     }
+    text = `${a} × ${b} = ?`;
   } else {
-    op = '+';
     while(true){
       a = randInt(0, 10)*10;
       b = randInt(0, 10)*10;
       correct = a + b;
       if(correct <= 100) break;
     }
+    text = `${a} + ${b} = ?`;
   }
-
-  const text = `${a} ${op} ${b} = ?`;
-  return {a,b,op,correct,text,answerType:'keypad'};
+  return {text, correct, answerType:'keypad'};
 }
 
+/* 4 Sterne: bis 100, keypad (+ oder ×) */
 function genVeryHardKeypad(){
-  // Bis 100: Addition oder Multiplikation
   const useMul = Math.random() < 0.45;
-  let a,b,op,correct;
+  let a,b,correct,text;
 
   if(useMul){
-    op='×';
-    // kindgerecht, aber bis 100: z.B. 0..12 × 0..12 (max 144) -> begrenzen auf <=100
     while(true){
       a = randInt(0, 12);
       b = randInt(0, 12);
       correct = a*b;
       if(correct <= 100) break;
     }
+    text = `${a} × ${b} = ?`;
   } else {
-    op='+';
     while(true){
       a = randInt(0, 100);
       b = randInt(0, 100);
       correct = a+b;
       if(correct <= 100) break;
     }
+    text = `${a} + ${b} = ?`;
   }
-
-  const text = `${a} ${op} ${b} = ?`;
-  return {a,b,op,correct,text,answerType:'keypad'};
+  return {text, correct, answerType:'keypad'};
 }
 
 /* =========================
-   MC options helper
+   Options helper
    ========================= */
 function makeMCOptions(correct, count, minV, maxV){
   const set = new Set([correct]);
-  // kindgerechte Ablenkungen: nahe Werte, +1/-1, +2/-2, +10/-10
   const candidates = [];
   [1,2,3,4,5,10].forEach(d=>{
     candidates.push(correct + d, correct - d);
   });
-  // zufällig weitere Offsets
   for(let i=0;i<20;i++){
     const off = randInt(-12,12);
     if(off!==0) candidates.push(correct + off);
   }
 
-  // füllen
   let guard = 0;
   while(set.size < count && guard < 400){
     guard++;
@@ -1280,7 +1178,6 @@ function makeMCOptions(correct, count, minV, maxV){
   }
 
   const arr = Array.from(set);
-  // shuffle
   for(let i=arr.length-1;i>0;i--){
     const j = randInt(0,i);
     [arr[i],arr[j]] = [arr[j],arr[i]];
@@ -1291,26 +1188,21 @@ function makeMCOptions(correct, count, minV, maxV){
 /* =========================
    UI helpers
    ========================= */
-
 function updateStats(){
   sRight.textContent = String(correctCount);
   sTotal.textContent = String(totalTasks);
   const pct = totalTasks ? Math.round((correctCount/totalTasks)*100) : 0;
   sPct.textContent = pct + '%';
 }
-
 function updateScoreUI(){
   scoreText.textContent = String(score);
   setScoreDot(score);
 }
-
 function setScoreDot(scoreVal){
-  // map -5..+5 => 0..100
   const clamped = clamp(scoreVal, -5, 5);
   const pct = ((clamped + 5) / 10) * 100;
   scoreDot.style.left = pct + '%';
 }
-
 function clamp(x, a, b){ return Math.max(a, Math.min(b, x)); }
 function randInt(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
 </script>
