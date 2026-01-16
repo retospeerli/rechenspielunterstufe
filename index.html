@@ -3,28 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kopfrechnen – Addition & Multiplikation</title>
+  <title>Kopfrechnen – ZR20 / ZR100</title>
   <style>
     :root{
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --text:#0f172a;
       --muted:#475569;
-      --card:#ffffffcc; /* leicht transparent */
-      --line:#d1d5db;
-
-      --blue:#2563eb;
-      --green:#16a34a;
-      --red:#dc2626;
-      --yellow:#f59e0b;
-      --purple:#7c3aed;
-      --pink:#db2777;
-      --teal:#0ea5e9;
 
       --shadow: 0 12px 30px rgba(2,6,23,0.10);
       --star:#facc15;
+
+      /* Pastell-Background */
+      --bg1:#e0f2fe;
+      --bg2:#fce7f3;
+      --bg3:#dcfce7;
+      --bg4:#eef2ff;
+
+      /* Button Color Tokens (Hintergrund / Rahmen hell / Rahmen dunkel / Text) */
+      --teal-bg:  linear-gradient(135deg, #cffafe 0%, #67e8f9 100%);
+      --teal-br:  rgba(14,165,233,0.35);
+      --teal-brD: #0284c7;
+      --teal-tx:  #0f172a;
+
+      --purple-bg: linear-gradient(135deg, #ede9fe 0%, #c4b5fd 100%);
+      --purple-br: rgba(124,58,237,0.35);
+      --purple-brD:#5b21b6;
+      --purple-tx: #0f172a;
+
+      --green-bg: linear-gradient(135deg, #dcfce7 0%, #86efac 100%);
+      --green-br: rgba(22,163,74,0.35);
+      --green-brD:#166534;
+      --green-tx: #0f172a;
+
+      --yellow-bg: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
+      --yellow-br: rgba(245,158,11,0.45);
+      --yellow-brD:#b45309;
+      --yellow-tx: #0f172a;
+
+      --blue-bg: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%);
+      --blue-br: rgba(37,99,235,0.35);
+      --blue-brD:#1d4ed8;
+      --blue-tx: #0f172a;
+
+      --pink-bg: linear-gradient(135deg, #fce7f3 0%, #f9a8d4 100%);
+      --pink-br: rgba(219,39,119,0.35);
+      --pink-brD:#9d174d;
+      --pink-tx: #0f172a;
+
+      --card: rgba(255,255,255,0.82);
+      --cardLine: rgba(15,23,42,0.10);
+
+      --ok:#16a34a;
+      --bad:#dc2626;
     }
 
-    /* Sanfter Hintergrund (Pastell) */
     body{
       margin:0;
       min-height:100vh;
@@ -34,15 +66,15 @@
       padding:14px;
       color:var(--text);
       background:
-        radial-gradient(900px 600px at 10% 20%, #e0f2fe 0%, transparent 60%),
-        radial-gradient(900px 600px at 90% 30%, #fce7f3 0%, transparent 60%),
-        radial-gradient(900px 600px at 60% 90%, #dcfce7 0%, transparent 60%),
-        linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #fdf2f8 100%);
+        radial-gradient(900px 600px at 10% 20%, var(--bg1) 0%, transparent 60%),
+        radial-gradient(900px 600px at 90% 30%, var(--bg2) 0%, transparent 60%),
+        radial-gradient(900px 600px at 60% 90%, var(--bg3) 0%, transparent 60%),
+        linear-gradient(135deg, #f8fafc 0%, var(--bg4) 50%, #fdf2f8 100%);
     }
 
     .app{
       width:min(980px, 100%);
-      background:var(--card);
+      background: rgba(255,255,255,0.70);
       border:2px solid rgba(255,255,255,0.65);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
@@ -81,7 +113,7 @@
       border-radius:999px;
       border:2px solid rgba(37,99,235,0.25);
       background: rgba(37,99,235,0.12);
-      color: var(--blue);
+      color: #2563eb;
       font-weight:1100;
       font-size:1.15rem;
       cursor:pointer;
@@ -96,8 +128,13 @@
       background: rgba(37,99,235,0.20);
       border-color: rgba(37,99,235,0.35);
     }
+    .mini{
+      font-size:0.95rem;
+      color:var(--muted);
+      font-weight:1000;
+      white-space:nowrap;
+    }
 
-    /* Wenig Text – nur wenn Info AN */
     .help{
       margin:6px 0 12px;
       color:var(--muted);
@@ -115,40 +152,48 @@
     }
 
     .card{
-      border:2px solid rgba(15,23,42,0.08);
+      border:2px solid var(--cardLine);
       border-radius:20px;
       padding:12px;
-      background: rgba(255,255,255,0.82);
+      background: var(--card);
     }
 
-    /* Buttons – bunter */
+    /* Buttons */
     .btn{
-      border:2px solid rgba(15,23,42,0.10);
+      border:3px solid rgba(15,23,42,0.10);
       border-radius:18px;
       padding:12px 10px;
       font-size:1.05rem;
-      font-weight:1000;
+      font-weight:1100;
       cursor:pointer;
       user-select:none;
       touch-action: manipulation;
-      transition: transform 0.05s ease, filter 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+      transition: transform 0.05s ease, filter 0.15s ease, box-shadow 0.15s ease;
       box-shadow: 0 10px 18px rgba(2,6,23,0.08);
-      background: #f9fafb;
+      color: var(--text);
     }
     .btn:active{ transform: translateY(1px); }
+    .btn:hover{ filter: brightness(0.98) saturate(1.05); }
+
+    /* Selected: dunkler Rahmen im gleichen Farbton */
     .btn.selected{
       outline: 3px solid rgba(255,255,255,0.55);
-      filter: saturate(1.15);
       box-shadow: 0 16px 28px rgba(2,6,23,0.12);
     }
+    .btn[data-tone="teal"].selected{ border-color: var(--teal-brD); }
+    .btn[data-tone="purple"].selected{ border-color: var(--purple-brD); }
+    .btn[data-tone="green"].selected{ border-color: var(--green-brD); }
+    .btn[data-tone="yellow"].selected{ border-color: var(--yellow-brD); }
+    .btn[data-tone="blue"].selected{ border-color: var(--blue-brD); }
+    .btn[data-tone="pink"].selected{ border-color: var(--pink-brD); }
 
-    /* Farbschemata */
-    .c-blue{ background: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%); }
-    .c-pink{ background: linear-gradient(135deg, #fce7f3 0%, #f9a8d4 100%); }
-    .c-green{ background: linear-gradient(135deg, #dcfce7 0%, #86efac 100%); }
-    .c-yellow{ background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%); }
-    .c-purple{ background: linear-gradient(135deg, #ede9fe 0%, #c4b5fd 100%); }
-    .c-teal{ background: linear-gradient(135deg, #cffafe 0%, #67e8f9 100%); }
+    /* Non-selected: heller Rahmen im gleichen Farbton */
+    .btn[data-tone="teal"]{ border-color: var(--teal-br); background: var(--teal-bg); }
+    .btn[data-tone="purple"]{ border-color: var(--purple-br); background: var(--purple-bg); }
+    .btn[data-tone="green"]{ border-color: var(--green-br); background: var(--green-bg); }
+    .btn[data-tone="yellow"]{ border-color: var(--yellow-br); background: var(--yellow-bg); }
+    .btn[data-tone="blue"]{ border-color: var(--blue-br); background: var(--blue-bg); }
+    .btn[data-tone="pink"]{ border-color: var(--pink-br); background: var(--pink-bg); }
 
     .primary{
       width:100%;
@@ -156,7 +201,7 @@
       border-radius:999px;
       padding:12px 14px;
       font-size:1.18rem;
-      font-weight:1100;
+      font-weight:1200;
       color:white;
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
       box-shadow: 0 18px 30px rgba(37,99,235,0.22);
@@ -170,20 +215,20 @@
       width:100%;
       border-radius:999px;
       padding:11px 14px;
-      font-weight:1000;
+      font-weight:1100;
       background: rgba(255,255,255,0.75);
       box-shadow:none;
     }
 
     .rowNote{
       text-align:center;
-      font-weight:900;
+      font-weight:1100;
       color:var(--muted);
       min-height:1.2rem;
       margin-top:6px;
     }
 
-    /* Zeit-Buttons */
+    /* Zeit */
     .pillrow{ display:flex; flex-wrap:wrap; gap:10px; }
     .pill{
       display:inline-flex;
@@ -194,7 +239,7 @@
       border-radius:999px;
       padding:10px 12px;
       cursor:pointer;
-      font-weight:1100;
+      font-weight:1200;
       user-select:none;
       touch-action: manipulation;
       box-shadow: 0 10px 18px rgba(2,6,23,0.06);
@@ -211,7 +256,7 @@
       font-size:14px;
     }
 
-    /* Quiz */
+    /* Quiz Layout */
     .quiz-layout{
       display:grid;
       grid-template-columns: 1fr;
@@ -229,20 +274,14 @@
       border-radius:999px;
       padding:4px 10px;
       font-size:0.92rem;
-      font-weight:1100;
+      font-weight:1200;
       background: rgba(37,99,235,0.12);
       color: #1d4ed8;
-    }
-    .mini{
-      font-size:0.95rem;
-      color:var(--muted);
-      font-weight:1000;
-      white-space:nowrap;
     }
 
     .equation{
       font-size: clamp(2.4rem, 4.2vw, 3.2rem);
-      font-weight:1200;
+      font-weight:1300;
       text-align:center;
       margin:10px 0 4px;
       letter-spacing: 0.5px;
@@ -272,12 +311,12 @@
       margin-top:10px;
     }
     .opt{
-      border:2px solid rgba(15,23,42,0.10);
+      border:3px solid rgba(15,23,42,0.10);
       background: rgba(255,255,255,0.75);
       border-radius:18px;
       padding:14px 10px;
       font-size:1.45rem;
-      font-weight:1200;
+      font-weight:1300;
       cursor:pointer;
       user-select:none;
       touch-action: manipulation;
@@ -286,24 +325,23 @@
     }
     .opt:hover{ filter: brightness(0.98) saturate(1.05); }
     .opt:active{ transform: translateY(1px); }
-    .opt.disabled{ opacity:0.6; cursor:not-allowed; }
 
     /* Feedback */
     .feedback{
       min-height:1.4rem;
       text-align:center;
-      font-weight:1200;
+      font-weight:1300;
       margin-top:8px;
       font-size:1.08rem;
     }
-    .feedback.ok{ color:var(--green); }
-    .feedback.bad{ color:var(--red); }
+    .feedback.ok{ color:var(--ok); }
+    .feedback.bad{ color:var(--bad); }
 
     /* Score scale */
     .scoreWrap{ margin-top:10px; }
     .scoreTitle{
       display:flex; justify-content:space-between; align-items:center;
-      font-weight:1100; color:var(--muted); font-size:0.95rem;
+      font-weight:1200; color:var(--muted); font-size:0.95rem;
       margin-bottom:6px;
     }
     .scale{
@@ -332,7 +370,7 @@
     }
     .scaleLabels{
       display:flex; justify-content:space-between;
-      font-size:0.9rem; color:var(--muted); font-weight:1100;
+      font-size:0.9rem; color:var(--muted); font-weight:1200;
       margin-top:6px;
     }
 
@@ -353,8 +391,8 @@
       text-align:center;
       box-shadow: 0 10px 18px rgba(2,6,23,0.06);
     }
-    .scoreBox .label{ color:var(--muted); font-weight:1100; font-size:0.95rem; }
-    .scoreBox .num{ font-size:2.05rem; font-weight:1300; margin-top:2px; }
+    .scoreBox .label{ color:var(--muted); font-weight:1200; font-size:0.95rem; }
+    .scoreBox .num{ font-size:2.05rem; font-weight:1400; margin-top:2px; }
 
     /* Keypad */
     .answerLine{
@@ -370,7 +408,7 @@
       background: rgba(255,255,255,0.75);
       padding:12px;
       font-size:1.7rem;
-      font-weight:1300;
+      font-weight:1400;
       text-align:center;
       letter-spacing:2px;
       user-select:none;
@@ -386,7 +424,7 @@
       border-radius:18px;
       background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
       color:white;
-      font-weight:1300;
+      font-weight:1400;
       font-size:1.12rem;
       cursor:pointer;
       user-select:none;
@@ -419,7 +457,7 @@
       border-radius:18px;
       padding:14px 10px;
       font-size:1.6rem;
-      font-weight:1300;
+      font-weight:1400;
       cursor:pointer;
       user-select:none;
       touch-action: manipulation;
@@ -431,7 +469,7 @@
 
     .stars{
       display:inline-flex; gap:2px;
-      margin-right:6px;
+      margin-left:8px;
       vertical-align:middle;
     }
     .star{
@@ -449,37 +487,35 @@
       <h1>Kopfrechnen</h1>
       <button class="infoBtn on" id="infoBtn" title="Info ein/aus">i</button>
     </div>
-    <div class="mini" id="topMini">Addition & Multiplikation</div>
+    <div class="mini" id="topMini">ZR 20 / ZR 100</div>
   </div>
 
   <div class="help" id="helpText">
-    1) Wähle <strong>Training</strong> oder <strong>Wettkampf</strong>.<br>
-    2) Wähle die <strong>Zeit</strong> (nur im Wettkampf).<br>
-    3) Wähle die <strong>Sterne</strong>. Los!
+    Wähle Modus, Zeit und dann ZR20 oder ZR100. Los!
   </div>
 
   <!-- START -->
   <div id="start">
     <div class="grid two">
       <div class="card">
-        <div style="font-weight:1200; margin-bottom:8px;">Modus</div>
+        <div style="font-weight:1300; margin-bottom:8px;">Modus</div>
         <div class="grid two">
-          <button class="btn c-teal modeBtn" data-mode="train">Training</button>
-          <button class="btn c-purple modeBtn" data-mode="battle">Wettkampf</button>
+          <button class="btn modeBtn" data-tone="teal" data-mode="train">Training</button>
+          <button class="btn modeBtn" data-tone="purple" data-mode="battle">Wettkampf</button>
         </div>
 
         <div id="battleSettings" class="hidden" style="margin-top:10px;">
-          <div style="font-weight:1200; margin-bottom:8px;">Spiel</div>
+          <div style="font-weight:1300; margin-bottom:8px;">Spiel</div>
           <div class="grid three">
-            <button class="btn c-yellow matchBtn" data-match="5">Kurz</button>
-            <button class="btn c-pink matchBtn" data-match="7">Mittel</button>
-            <button class="btn c-blue matchBtn" data-match="9">Lang</button>
+            <button class="btn matchBtn" data-tone="yellow" data-match="5">Kurz</button>
+            <button class="btn matchBtn" data-tone="pink" data-match="7">Mittel</button>
+            <button class="btn matchBtn" data-tone="blue" data-match="9">Lang</button>
           </div>
         </div>
       </div>
 
       <div class="card">
-        <div style="font-weight:1200; margin-bottom:8px;">Zeit</div>
+        <div style="font-weight:1300; margin-bottom:8px;">Zeit</div>
         <div class="pillrow" id="timeRow">
           <div class="pill timeBtn" data-time="3"><span class="icon">⏱️</span>3 s</div>
           <div class="pill timeBtn" data-time="5"><span class="icon">⏱️</span>5 s</div>
@@ -489,23 +525,19 @@
     </div>
 
     <div class="card" style="margin-top:10px;">
-      <div style="font-weight:1200; margin-bottom:8px;">Sterne</div>
+      <div style="font-weight:1300; margin-bottom:8px;">Zahlenraum</div>
       <div class="grid two">
-        <button class="btn c-green diffBtn" data-diff="1">
-          <span class="stars"><span class="star">★</span></span>
-          1 Stern
+        <button class="btn diffBtn" data-tone="green" data-diff="1">
+          ZR 20 <span class="stars"><span class="star">★</span></span>
         </button>
-        <button class="btn c-yellow diffBtn" data-diff="2">
-          <span class="stars"><span class="star">★</span><span class="star">★</span></span>
-          2 Sterne
+        <button class="btn diffBtn" data-tone="yellow" data-diff="2">
+          ZR 20 <span class="stars"><span class="star">★</span><span class="star">★</span></span>
         </button>
-        <button class="btn c-blue diffBtn" data-diff="3">
-          <span class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span></span>
-          3 Sterne
+        <button class="btn diffBtn" data-tone="blue" data-diff="3">
+          ZR 100 <span class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span></span>
         </button>
-        <button class="btn c-pink diffBtn" data-diff="4">
-          <span class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></span>
-          4 Sterne
+        <button class="btn diffBtn" data-tone="pink" data-diff="4">
+          ZR 100 <span class="stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></span>
         </button>
       </div>
 
@@ -554,7 +586,7 @@
       </div>
 
       <div class="card">
-        <div style="font-weight:1200;">Anzeige</div>
+        <div style="font-weight:1300;">Anzeige</div>
 
         <div class="scoreboard hidden" id="battleBoard">
           <div class="scoreBox">
@@ -587,13 +619,13 @@
 
         <div class="card" style="margin-top:10px; background: rgba(255,255,255,0.55);">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
-            <div style="font-weight:1200;">Richtig</div>
+            <div style="font-weight:1300;">Richtig</div>
             <div class="tag" id="diffTag">—</div>
           </div>
-          <div style="margin-top:8px; font-weight:1200;">
+          <div style="margin-top:8px; font-weight:1300;">
             <span id="sRight">0</span> / <span id="sTotal">0</span>
           </div>
-          <div style="margin-top:4px; color:var(--muted); font-weight:1100;">
+          <div style="margin-top:4px; color:var(--muted); font-weight:1200;">
             <span id="sPct">0%</span>
           </div>
         </div>
@@ -606,8 +638,8 @@
   <div id="result" class="hidden">
     <div class="card" style="text-align:center;">
       <h2 style="margin:0 0 6px;">Fertig! 🎉</h2>
-      <p id="summary" style="margin:0; font-weight:1100;"></p>
-      <p style="margin:10px 0 0; color:var(--muted); font-weight:1000;">
+      <p id="summary" style="margin:0; font-weight:1200;"></p>
+      <p style="margin:10px 0 0; color:var(--muted); font-weight:1100;">
         <strong><span id="summaryPct">0%</span></strong>
       </p>
 
@@ -771,7 +803,7 @@ resetBtn.addEventListener('click', ()=>{
   updateStartReady();
 });
 
-/* Default: 5s ausgewählt */
+/* Default: 5s selected */
 (function init(){
   document.querySelectorAll('.timeBtn').forEach(x=>{
     if(parseInt(x.dataset.time,10)===5) x.classList.add('selected');
@@ -781,17 +813,10 @@ resetBtn.addEventListener('click', ()=>{
   updateStartReady();
 })();
 
-function diffLabel(d){
-  if(d===1) return "★";
-  if(d===2) return "★★";
-  if(d===3) return "★★★";
-  return "★★★★";
-}
-
 function updateStartReady(){
   let missing = [];
   if(!mode) missing.push("Modus");
-  if(!diff) missing.push("Sterne");
+  if(!diff) missing.push("ZR");
   if(missing.length){
     startInfo.textContent = "Bitte wählen: " + missing.join(", ");
     startBtn.disabled = true;
@@ -843,7 +868,7 @@ function startGame(){
   updateScoreUI();
 
   modeTag.textContent = (mode==='train') ? 'Training' : 'Wettkampf';
-  diffTag.textContent = diffLabel(diff);
+  diffTag.textContent = diff === 1 ? 'ZR20 ★' : diff === 2 ? 'ZR20 ★★' : diff === 3 ? 'ZR100 ★★★' : 'ZR100 ★★★★';
 
   showScreen('quiz');
   nextTask();
@@ -1057,96 +1082,167 @@ submitBtn.addEventListener('click', ()=>{
 });
 
 /* =========================
-   Generator (WICHTIG: diff 1&2 NUR ADDITION)
+   Generator
+   - ZR20 (diff 1/2): Addition & Subtraktion (keine ×/÷)
+   - ZR100 (diff 3/4): Addition, Subtraktion, Multiplikation, Division
    ========================= */
 function generateTask(d){
-  if(d === 1) return genEasyNoCarryMC();      // NUR +
-  if(d === 2) return genMediumCarryMC();      // NUR +
-  if(d === 3) return genHardTensKeypad();     // + oder ×
-  return genVeryHardKeypad();                // + oder ×
+  if(d === 1) return genZR20EasyMC();
+  if(d === 2) return genZR20HardMC();
+  if(d === 3) return genZR100TensKeypad();     // 10er (kinderfreundlich)
+  return genZR100Keypad();                     // frei bis 100
 }
 
-/* 1 Stern: 0..20 ohne Zehnerübergang, MC */
-function genEasyNoCarryMC(){
-  let a,b,correct;
-  while(true){
-    a = randInt(0, 20);
-    b = randInt(0, 20);
-    if((a%10) + (b%10) <= 9 && a + b <= 20){
-      correct = a + b;
-      break;
-    }
-  }
-  const text = `${a} + ${b} = ?`;
-  const options = makeMCOptions(correct, 4, 0, 40);
-  return {text, correct, answerType:'mc', options};
-}
-
-/* 2 Sterne: 0..20 mit Zehnerübergang, MC */
-function genMediumCarryMC(){
-  let a,b,correct;
-  while(true){
-    a = randInt(0, 20);
-    b = randInt(0, 20);
-    const sum = a + b;
-    if((a%10) + (b%10) >= 10 && sum <= 20){
-      correct = sum;
-      break;
-    }
-  }
-  const text = `${a} + ${b} = ?`;
-  const options = makeMCOptions(correct, 4, 0, 40);
-  return {text, correct, answerType:'mc', options};
-}
-
-/* 3 Sterne: bis 100, nur 10er, keypad (+ oder ×) */
-function genHardTensKeypad(){
-  const useMul = Math.random() < 0.55;
+/* ZR20 ★ : ohne Zehnerübergang, MC */
+function genZR20EasyMC(){
+  const isSub = Math.random() < 0.5;
   let a,b,correct,text;
 
-  if(useMul){
-    const tens = [10,20,30,40,50,60,70,80,90,100];
+  if(isSub){
+    // Subtraktion ohne Zehnerübergang: Einer(a) >= Einer(b), Ergebnis >=0
     while(true){
-      a = randInt(0, 10);
+      a = randInt(0,20);
+      b = randInt(0,a);
+      if((a%10) >= (b%10)){
+        correct = a-b;
+        break;
+      }
+    }
+    text = `${a} − ${b} = ?`;
+  } else {
+    // Addition ohne Zehnerübergang & <=20
+    while(true){
+      a = randInt(0,20);
+      b = randInt(0,20);
+      const sum = a+b;
+      if((a%10)+(b%10) <= 9 && sum <= 20){
+        correct = sum;
+        break;
+      }
+    }
+    text = `${a} + ${b} = ?`;
+  }
+
+  const options = makeMCOptions(correct, 4, 0, 30);
+  return {text, correct, answerType:'mc', options};
+}
+
+/* ZR20 ★★ : mit Zehnerübergang, MC */
+function genZR20HardMC(){
+  const isSub = Math.random() < 0.5;
+  let a,b,correct,text;
+
+  if(isSub){
+    // Subtraktion mit Zehnerübergang: Einer(a) < Einer(b), Ergebnis >=0
+    while(true){
+      a = randInt(10,20);
+      b = randInt(1,a);
+      if((a%10) < (b%10)){
+        correct = a-b;
+        break;
+      }
+    }
+    text = `${a} − ${b} = ?`;
+  } else {
+    // Addition mit Zehnerübergang & <=20
+    while(true){
+      a = randInt(0,20);
+      b = randInt(0,20);
+      const sum = a+b;
+      if((a%10)+(b%10) >= 10 && sum <= 20){
+        correct = sum;
+        break;
+      }
+    }
+    text = `${a} + ${b} = ?`;
+  }
+
+  const options = makeMCOptions(correct, 4, 0, 30);
+  return {text, correct, answerType:'mc', options};
+}
+
+/* ZR100 ★★★ : nur 10er (Addition/Subtraktion/Multiplikation/Division), Keypad */
+function genZR100TensKeypad(){
+  // Operatoren: +, −, ×, ÷
+  const ops = ['+','−','×','÷'];
+  const op = ops[randInt(0, ops.length-1)];
+  let a,b,correct,text;
+
+  if(op === '+'){
+    while(true){
+      a = randInt(0,10)*10;
+      b = randInt(0,10)*10;
+      correct = a+b;
+      if(correct <= 100) break;
+    }
+    text = `${a} + ${b} = ?`;
+  } else if(op === '−'){
+    a = randInt(0,10)*10;
+    b = randInt(0,10)*10;
+    if(b > a){ const t=a; a=b; b=t; }
+    correct = a-b;
+    text = `${a} − ${b} = ?`;
+  } else if(op === '×'){
+    // z.B. 6 × 10, 4 × 20, Ergebnis <=100
+    const tens = [10,20,30,40,50];
+    while(true){
+      a = randInt(0,10);
       b = tens[randInt(0, tens.length-1)];
       correct = a*b;
       if(correct <= 100) break;
     }
     text = `${a} × ${b} = ?`;
   } else {
-    while(true){
-      a = randInt(0, 10)*10;
-      b = randInt(0, 10)*10;
-      correct = a + b;
-      if(correct <= 100) break;
-    }
-    text = `${a} + ${b} = ?`;
+    // Division ohne Rest: (10er/10) oder (100/20) etc.
+    // Wir bauen korrekt als: (q * d) ÷ d = q
+    const divisors = [10,20,25,50];
+    b = divisors[randInt(0, divisors.length-1)];
+    const qMax = Math.floor(100 / b);
+    const q = randInt(0, qMax);
+    a = q * b;
+    correct = q;
+    text = `${a} ÷ ${b} = ?`;
   }
+
   return {text, correct, answerType:'keypad'};
 }
 
-/* 4 Sterne: bis 100, keypad (+ oder ×) */
-function genVeryHardKeypad(){
-  const useMul = Math.random() < 0.45;
+/* ZR100 ★★★★ : frei bis 100 (Addition/Subtraktion/Multiplikation/Division), Keypad */
+function genZR100Keypad(){
+  const ops = ['+','−','×','÷'];
+  const op = ops[randInt(0, ops.length-1)];
   let a,b,correct,text;
 
-  if(useMul){
+  if(op === '+'){
+    a = randInt(0,100);
+    b = randInt(0,100);
+    if(a+b > 100){ b = 100 - a; }
+    correct = a+b;
+    text = `${a} + ${b} = ?`;
+  } else if(op === '−'){
+    a = randInt(0,100);
+    b = randInt(0,a);
+    correct = a-b;
+    text = `${a} − ${b} = ?`;
+  } else if(op === '×'){
+    // kindgerecht, aber bis 100: Begrenzen
     while(true){
-      a = randInt(0, 12);
-      b = randInt(0, 12);
+      a = randInt(0,12);
+      b = randInt(0,12);
       correct = a*b;
       if(correct <= 100) break;
     }
     text = `${a} × ${b} = ?`;
   } else {
-    while(true){
-      a = randInt(0, 100);
-      b = randInt(0, 100);
-      correct = a+b;
-      if(correct <= 100) break;
-    }
-    text = `${a} + ${b} = ?`;
+    // Division ohne Rest: a = q*d, 0..100
+    b = randInt(1,12);
+    const qMax = Math.floor(100 / b);
+    const q = randInt(0, qMax);
+    a = q * b;
+    correct = q;
+    text = `${a} ÷ ${b} = ?`;
   }
+
   return {text, correct, answerType:'keypad'};
 }
 
