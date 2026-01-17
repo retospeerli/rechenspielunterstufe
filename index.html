@@ -13,42 +13,31 @@
       --shadow: 0 12px 30px rgba(2,6,23,0.10);
       --star:#facc15;
 
-      /* Pastell-Background */
-      --bg1:#e0f2fe;
-      --bg2:#fce7f3;
-      --bg3:#dcfce7;
-      --bg4:#eef2ff;
+      --bg1:#e0f2fe; --bg2:#fce7f3; --bg3:#dcfce7; --bg4:#eef2ff;
 
-      /* Button Color Tokens (Hintergrund / Rahmen hell / Rahmen dunkel / Text) */
       --teal-bg:  linear-gradient(135deg, #cffafe 0%, #67e8f9 100%);
       --teal-br:  rgba(14,165,233,0.35);
       --teal-brD: #0284c7;
-      --teal-tx:  #0f172a;
 
       --purple-bg: linear-gradient(135deg, #ede9fe 0%, #c4b5fd 100%);
       --purple-br: rgba(124,58,237,0.35);
       --purple-brD:#5b21b6;
-      --purple-tx: #0f172a;
 
       --green-bg: linear-gradient(135deg, #dcfce7 0%, #86efac 100%);
       --green-br: rgba(22,163,74,0.35);
       --green-brD:#166534;
-      --green-tx: #0f172a;
 
       --yellow-bg: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
       --yellow-br: rgba(245,158,11,0.45);
       --yellow-brD:#b45309;
-      --yellow-tx: #0f172a;
 
       --blue-bg: linear-gradient(135deg, #dbeafe 0%, #93c5fd 100%);
       --blue-br: rgba(37,99,235,0.35);
       --blue-brD:#1d4ed8;
-      --blue-tx: #0f172a;
 
       --pink-bg: linear-gradient(135deg, #fce7f3 0%, #f9a8d4 100%);
       --pink-br: rgba(219,39,119,0.35);
       --pink-brD:#9d174d;
-      --pink-tx: #0f172a;
 
       --card: rgba(255,255,255,0.82);
       --cardLine: rgba(15,23,42,0.10);
@@ -83,73 +72,37 @@
       padding:16px 18px;
       box-sizing:border-box;
     }
-    @media (min-width: 820px){
-      .app{ padding:18px 22px; }
-    }
+    @media (min-width: 820px){ .app{ padding:18px 22px; } }
 
-    /* Header */
     .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
       margin-bottom:10px;
     }
-    .titleWrap{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    h1{
-      margin:0;
-      font-size:1.35rem;
-      line-height:1.1;
-      font-weight:1100;
-      letter-spacing:0.2px;
-    }
+    .titleWrap{ display:flex; align-items:center; gap:10px; }
+    h1{ margin:0; font-size:1.35rem; font-weight:1100; letter-spacing:0.2px; }
+    .mini{ font-size:0.95rem; color:var(--muted); font-weight:1000; white-space:nowrap; }
+
     .infoBtn{
-      width:42px;
-      height:42px;
-      border-radius:999px;
+      width:42px; height:42px; border-radius:999px;
       border:2px solid rgba(37,99,235,0.25);
       background: rgba(37,99,235,0.12);
       color: #2563eb;
-      font-weight:1100;
-      font-size:1.15rem;
+      font-weight:1100; font-size:1.15rem;
       cursor:pointer;
-      display:grid;
-      place-items:center;
-      user-select:none;
-      touch-action: manipulation;
+      display:grid; place-items:center;
+      user-select:none; touch-action: manipulation;
       transition: transform 0.05s ease, background 0.15s ease;
     }
     .infoBtn:active{ transform: translateY(1px); }
-    .infoBtn.on{
-      background: rgba(37,99,235,0.20);
-      border-color: rgba(37,99,235,0.35);
-    }
-    .mini{
-      font-size:0.95rem;
-      color:var(--muted);
-      font-weight:1000;
-      white-space:nowrap;
-    }
+    .infoBtn.on{ background: rgba(37,99,235,0.20); border-color: rgba(37,99,235,0.35); }
 
-    .help{
-      margin:6px 0 12px;
-      color:var(--muted);
-      font-size:0.98rem;
-      line-height:1.25;
-    }
+    .help{ margin:6px 0 12px; color:var(--muted); font-size:0.98rem; line-height:1.25; }
     .hidden{ display:none !important; }
 
-    /* Layout */
     .grid{ display:grid; gap:10px; }
     .grid.two{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .grid.three{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    @media (max-width: 640px){
-      .grid.two, .grid.three{ grid-template-columns: 1fr; }
-    }
+    @media (max-width: 640px){ .grid.two, .grid.three{ grid-template-columns: 1fr; } }
 
     .card{
       border:2px solid var(--cardLine);
@@ -158,7 +111,6 @@
       background: var(--card);
     }
 
-    /* Buttons */
     .btn{
       border:3px solid rgba(15,23,42,0.10);
       border-radius:18px;
@@ -175,7 +127,6 @@
     .btn:active{ transform: translateY(1px); }
     .btn:hover{ filter: brightness(0.98) saturate(1.05); }
 
-    /* Selected: dunkler Rahmen im gleichen Farbton */
     .btn.selected{
       outline: 3px solid rgba(255,255,255,0.55);
       box-shadow: 0 16px 28px rgba(2,6,23,0.12);
@@ -187,7 +138,6 @@
     .btn[data-tone="blue"].selected{ border-color: var(--blue-brD); }
     .btn[data-tone="pink"].selected{ border-color: var(--pink-brD); }
 
-    /* Non-selected: heller Rahmen im gleichen Farbton */
     .btn[data-tone="teal"]{ border-color: var(--teal-br); background: var(--teal-bg); }
     .btn[data-tone="purple"]{ border-color: var(--purple-br); background: var(--purple-bg); }
     .btn[data-tone="green"]{ border-color: var(--green-br); background: var(--green-bg); }
@@ -206,11 +156,7 @@
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
       box-shadow: 0 18px 30px rgba(37,99,235,0.22);
     }
-    .primary:disabled{
-      opacity:0.55;
-      cursor:not-allowed;
-      box-shadow:none;
-    }
+    .primary:disabled{ opacity:0.55; cursor:not-allowed; box-shadow:none; }
     .ghost{
       width:100%;
       border-radius:999px;
@@ -228,45 +174,43 @@
       margin-top:6px;
     }
 
-    /* Zeit */
+    /* Timer buttons (icons only) */
     .pillrow{ display:flex; flex-wrap:wrap; gap:10px; }
     .pill{
       display:inline-flex;
-      gap:8px;
+      gap:10px;
       align-items:center;
       border:2px solid rgba(15,23,42,0.10);
-      background: rgba(255,255,255,0.80);
+      background: rgba(255,255,255,0.82);
       border-radius:999px;
-      padding:10px 12px;
+      padding:11px 14px;
       cursor:pointer;
       font-weight:1200;
       user-select:none;
       touch-action: manipulation;
       box-shadow: 0 10px 18px rgba(2,6,23,0.06);
+      font-size:1.05rem;
     }
     .pill.selected{
       border-color: rgba(14,165,233,0.35);
       background: rgba(14,165,233,0.14);
     }
     .icon{
-      width:22px; height:22px;
+      width:26px; height:26px;
       display:inline-grid; place-items:center;
       border-radius:999px;
       background: rgba(15,23,42,0.08);
-      font-size:14px;
+      font-size:15px;
     }
+    .bolt{ font-size:16px; line-height:1; }
 
-    /* Quiz Layout */
     .quiz-layout{
       display:grid;
       grid-template-columns: 1fr;
       gap:12px;
     }
     @media (min-width: 820px){
-      .quiz-layout{
-        grid-template-columns: 1.05fr 0.95fr;
-        align-items:start;
-      }
+      .quiz-layout{ grid-template-columns: 1.05fr 0.95fr; align-items:start; }
     }
 
     .tag{
@@ -287,7 +231,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* Timer */
     .timerWrap{
       margin-top:8px;
       height:16px;
@@ -303,7 +246,6 @@
       transition: width 0.08s linear;
     }
 
-    /* MC */
     .options{
       display:grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -326,7 +268,6 @@
     .opt:hover{ filter: brightness(0.98) saturate(1.05); }
     .opt:active{ transform: translateY(1px); }
 
-    /* Feedback */
     .feedback{
       min-height:1.4rem;
       text-align:center;
@@ -337,7 +278,6 @@
     .feedback.ok{ color:var(--ok); }
     .feedback.bad{ color:var(--bad); }
 
-    /* Score scale */
     .scoreWrap{ margin-top:10px; }
     .scoreTitle{
       display:flex; justify-content:space-between; align-items:center;
@@ -374,7 +314,6 @@
       margin-top:6px;
     }
 
-    /* Scoreboard */
     .scoreboard{
       display:flex;
       gap:10px;
@@ -394,7 +333,6 @@
     .scoreBox .label{ color:var(--muted); font-weight:1200; font-size:0.95rem; }
     .scoreBox .num{ font-size:2.05rem; font-weight:1400; margin-top:2px; }
 
-    /* Keypad */
     .answerLine{
       display:flex;
       gap:10px;
@@ -491,7 +429,7 @@
   </div>
 
   <div class="help" id="helpText">
-    Wähle Modus, Zeit und dann ZR20 oder ZR100. Los!
+    ZR20: rechnen &amp; ergänzen. ZR100: plus/minus &amp; ergänzen. (×/÷ sind aus.)
   </div>
 
   <!-- START -->
@@ -517,9 +455,10 @@
       <div class="card">
         <div style="font-weight:1300; margin-bottom:8px;">Zeit</div>
         <div class="pillrow" id="timeRow">
-          <div class="pill timeBtn" data-time="3"><span class="icon">⏱️</span>3 s</div>
-          <div class="pill timeBtn" data-time="5"><span class="icon">⏱️</span>5 s</div>
-          <div class="pill timeBtn" data-time="10"><span class="icon">⏱️</span>10 s</div>
+          <div class="pill timeBtn" data-time="5"  title="Sehr schnell (5s)"><span class="icon">⏱️</span><span class="bolt">⚡⚡⚡</span></div>
+          <div class="pill timeBtn" data-time="7.5" title="Schnell (7.5s)"><span class="icon">⏱️</span><span class="bolt">⚡⚡</span></div>
+          <div class="pill timeBtn" data-time="10" title="Mittel (10s)"><span class="icon">⏱️</span><span class="bolt">⚡</span></div>
+          <div class="pill timeBtn" data-time="15" title="Normal (15s)"><span class="icon">⏱️</span></div>
         </div>
       </div>
     </div>
@@ -674,7 +613,7 @@ function playSound(key){
    ========================= */
 let mode = null;            // 'train' | 'battle'
 let matchBestOf = 5;        // 5|7|9
-let answerTime = 5;         // 3|5|10
+let answerTime = 10;        // 5|7.5|10|15
 let diff = null;            // 1..4
 
 let totalTasks = 0;
@@ -778,7 +717,7 @@ document.querySelectorAll('.matchBtn').forEach(btn=>{
 
 document.querySelectorAll('.timeBtn').forEach(pill=>{
   pill.addEventListener('click', ()=>{
-    answerTime = parseInt(pill.dataset.time, 10);
+    answerTime = parseFloat(pill.dataset.time);
     document.querySelectorAll('.timeBtn').forEach(x=>x.classList.remove('selected'));
     pill.classList.add('selected');
     updateStartReady();
@@ -794,19 +733,20 @@ document.querySelectorAll('.diffBtn').forEach(btn=>{
 });
 
 resetBtn.addEventListener('click', ()=>{
-  mode = null; diff = null; answerTime = 5; matchBestOf = 5;
+  mode = null; diff = null; answerTime = 10; matchBestOf = 5;
   document.querySelectorAll('.modeBtn,.matchBtn,.timeBtn,.diffBtn').forEach(x=>x.classList.remove('selected'));
+  // default time: 10s (⚡)
   document.querySelectorAll('.timeBtn').forEach(x=>{
-    if(parseInt(x.dataset.time,10)===5) x.classList.add('selected');
+    if(parseFloat(x.dataset.time)===10) x.classList.add('selected');
   });
   battleSettings.classList.add('hidden');
   updateStartReady();
 });
 
-/* Default: 5s selected */
+/* Default: 10s selected */
 (function init(){
   document.querySelectorAll('.timeBtn').forEach(x=>{
-    if(parseInt(x.dataset.time,10)===5) x.classList.add('selected');
+    if(parseFloat(x.dataset.time)===10) x.classList.add('selected');
   });
   buildKeypad();
   setScoreDot(0);
@@ -868,7 +808,10 @@ function startGame(){
   updateScoreUI();
 
   modeTag.textContent = (mode==='train') ? 'Training' : 'Wettkampf';
-  diffTag.textContent = diff === 1 ? 'ZR20 ★' : diff === 2 ? 'ZR20 ★★' : diff === 3 ? 'ZR100 ★★★' : 'ZR100 ★★★★';
+  diffTag.textContent =
+    diff===1 ? 'ZR20 ★' :
+    diff===2 ? 'ZR20 ★★' :
+    diff===3 ? 'ZR100 ★★★' : 'ZR100 ★★★★';
 
   showScreen('quiz');
   nextTask();
@@ -894,6 +837,8 @@ function nextTask(){
     taskCounter.textContent = `Runde ${roundNo}`;
   }
 
+  // ZR20: immer MC (damit Kinder nicht tippen müssen)
+  // ZR100: Keypad (direkte Eingabe)
   if(current.answerType === 'mc'){
     keypadArea.classList.add('hidden');
     mcArea.classList.remove('hidden');
@@ -1082,168 +1027,179 @@ submitBtn.addEventListener('click', ()=>{
 });
 
 /* =========================
-   Generator
-   - ZR20 (diff 1/2): Addition & Subtraktion (keine ×/÷)
-   - ZR100 (diff 3/4): Addition, Subtraktion, Multiplikation, Division
+   Generator (NEU nach Vorgabe)
+   ZR20:
+     ★   = normale Aufgaben: a+b=?  /  a-b=?
+     ★★  = Umkehrrechnung/Ergänzen: a+?=c  /  ?-a=b  /  ?+a=c  /  c-?=a
+   ZR100:
+     ★★★ = +/− & Ergänzen; nur wenn Ergebnis > 50 darf ein 10er vorkommen
+     ★★★★= +/− & Ergänzen; frei bis 100
+   Multiplikation/Division in ZR100: gestrichen.
    ========================= */
 function generateTask(d){
-  if(d === 1) return genZR20EasyMC();
-  if(d === 2) return genZR20HardMC();
-  if(d === 3) return genZR100TensKeypad();     // 10er (kinderfreundlich)
-  return genZR100Keypad();                     // frei bis 100
+  if(d === 1) return genZR20NormalMC();
+  if(d === 2) return genZR20MissingMC();
+  if(d === 3) return genZR100MissingKeypad(true);
+  return genZR100MissingKeypad(false);
 }
 
-/* ZR20 ★ : ohne Zehnerübergang, MC */
-function genZR20EasyMC(){
+/* ---------- ZR20 ★: normal rechnen, Antwort abfragen ---------- */
+function genZR20NormalMC(){
   const isSub = Math.random() < 0.5;
   let a,b,correct,text;
 
   if(isSub){
-    // Subtraktion ohne Zehnerübergang: Einer(a) >= Einer(b), Ergebnis >=0
-    while(true){
-      a = randInt(0,20);
-      b = randInt(0,a);
-      if((a%10) >= (b%10)){
-        correct = a-b;
-        break;
-      }
-    }
-    text = `${a} − ${b} = ?`;
-  } else {
-    // Addition ohne Zehnerübergang & <=20
-    while(true){
-      a = randInt(0,20);
-      b = randInt(0,20);
-      const sum = a+b;
-      if((a%10)+(b%10) <= 9 && sum <= 20){
-        correct = sum;
-        break;
-      }
-    }
-    text = `${a} + ${b} = ?`;
-  }
-
-  const options = makeMCOptions(correct, 4, 0, 30);
-  return {text, correct, answerType:'mc', options};
-}
-
-/* ZR20 ★★ : mit Zehnerübergang, MC */
-function genZR20HardMC(){
-  const isSub = Math.random() < 0.5;
-  let a,b,correct,text;
-
-  if(isSub){
-    // Subtraktion mit Zehnerübergang: Einer(a) < Einer(b), Ergebnis >=0
-    while(true){
-      a = randInt(10,20);
-      b = randInt(1,a);
-      if((a%10) < (b%10)){
-        correct = a-b;
-        break;
-      }
-    }
-    text = `${a} − ${b} = ?`;
-  } else {
-    // Addition mit Zehnerübergang & <=20
-    while(true){
-      a = randInt(0,20);
-      b = randInt(0,20);
-      const sum = a+b;
-      if((a%10)+(b%10) >= 10 && sum <= 20){
-        correct = sum;
-        break;
-      }
-    }
-    text = `${a} + ${b} = ?`;
-  }
-
-  const options = makeMCOptions(correct, 4, 0, 30);
-  return {text, correct, answerType:'mc', options};
-}
-
-/* ZR100 ★★★ : nur 10er (Addition/Subtraktion/Multiplikation/Division), Keypad */
-function genZR100TensKeypad(){
-  // Operatoren: +, −, ×, ÷
-  const ops = ['+','−','×','÷'];
-  const op = ops[randInt(0, ops.length-1)];
-  let a,b,correct,text;
-
-  if(op === '+'){
-    while(true){
-      a = randInt(0,10)*10;
-      b = randInt(0,10)*10;
-      correct = a+b;
-      if(correct <= 100) break;
-    }
-    text = `${a} + ${b} = ?`;
-  } else if(op === '−'){
-    a = randInt(0,10)*10;
-    b = randInt(0,10)*10;
-    if(b > a){ const t=a; a=b; b=t; }
-    correct = a-b;
-    text = `${a} − ${b} = ?`;
-  } else if(op === '×'){
-    // z.B. 6 × 10, 4 × 20, Ergebnis <=100
-    const tens = [10,20,30,40,50];
-    while(true){
-      a = randInt(0,10);
-      b = tens[randInt(0, tens.length-1)];
-      correct = a*b;
-      if(correct <= 100) break;
-    }
-    text = `${a} × ${b} = ?`;
-  } else {
-    // Division ohne Rest: (10er/10) oder (100/20) etc.
-    // Wir bauen korrekt als: (q * d) ÷ d = q
-    const divisors = [10,20,25,50];
-    b = divisors[randInt(0, divisors.length-1)];
-    const qMax = Math.floor(100 / b);
-    const q = randInt(0, qMax);
-    a = q * b;
-    correct = q;
-    text = `${a} ÷ ${b} = ?`;
-  }
-
-  return {text, correct, answerType:'keypad'};
-}
-
-/* ZR100 ★★★★ : frei bis 100 (Addition/Subtraktion/Multiplikation/Division), Keypad */
-function genZR100Keypad(){
-  const ops = ['+','−','×','÷'];
-  const op = ops[randInt(0, ops.length-1)];
-  let a,b,correct,text;
-
-  if(op === '+'){
-    a = randInt(0,100);
-    b = randInt(0,100);
-    if(a+b > 100){ b = 100 - a; }
-    correct = a+b;
-    text = `${a} + ${b} = ?`;
-  } else if(op === '−'){
-    a = randInt(0,100);
+    a = randInt(0,20);
     b = randInt(0,a);
-    correct = a-b;
+    correct = a - b;
     text = `${a} − ${b} = ?`;
-  } else if(op === '×'){
-    // kindgerecht, aber bis 100: Begrenzen
-    while(true){
-      a = randInt(0,12);
-      b = randInt(0,12);
-      correct = a*b;
-      if(correct <= 100) break;
-    }
-    text = `${a} × ${b} = ?`;
   } else {
-    // Division ohne Rest: a = q*d, 0..100
-    b = randInt(1,12);
-    const qMax = Math.floor(100 / b);
-    const q = randInt(0, qMax);
-    a = q * b;
-    correct = q;
-    text = `${a} ÷ ${b} = ?`;
+    a = randInt(0,20);
+    b = randInt(0,20);
+    if(a+b > 20){ b = 20 - a; }
+    correct = a + b;
+    text = `${a} + ${b} = ?`;
+  }
+
+  return {text, correct, answerType:'mc', options: makeMCOptions(correct, 4, 0, 20)};
+}
+
+/* ---------- ZR20 ★★: Ergänzen/Umkehrrechnung (MC) ---------- */
+function genZR20MissingMC(){
+  // Formen:
+  // 1) a + ? = c
+  // 2) ? + a = c
+  // 3) ? − a = b
+  // 4) c − ? = a
+  const form = randInt(1,4);
+  let a,b,c,correct,text;
+
+  if(form === 1){
+    a = randInt(0,20);
+    c = randInt(a,20);
+    correct = c - a;
+    text = `${a} + ? = ${c}`;
+  } else if(form === 2){
+    a = randInt(0,20);
+    c = randInt(a,20);
+    correct = c - a;
+    text = `? + ${a} = ${c}`;
+  } else if(form === 3){
+    // ? - a = b  => ? = a+b
+    a = randInt(0,20);
+    b = randInt(0,20);
+    if(a+b > 20){ b = 20 - a; }
+    correct = a + b;
+    text = `? − ${a} = ${b}`;
+  } else {
+    // c - ? = a  => ? = c-a
+    c = randInt(0,20);
+    a = randInt(0,c);
+    correct = c - a;
+    text = `${c} − ? = ${a}`;
+  }
+
+  return {text, correct, answerType:'mc', options: makeMCOptions(correct, 4, 0, 20)};
+}
+
+/* ---------- ZR100 ★★★/★★★★: +/− & Ergänzen (Keypad) ---------- */
+/* tensRule=true: nur wenn Ergebnis > 50 darf ein 10er vorkommen (bei den gegebenen Zahlen) */
+function genZR100MissingKeypad(tensRule){
+  // Formen:
+  // A) x + ? = y
+  // B) ? + x = y
+  // C) ? − x = y
+  // D) y − ? = x
+  // E) x + y = ?
+  // F) x − y = ?
+  const forms = ['A','B','C','D','E','F'];
+  const form = forms[randInt(0, forms.length-1)];
+
+  let x,y,correct,text;
+
+  if(form === 'A'){ // x + ? = y
+    y = randInt(0,100);
+    x = randInt(0,y);
+    correct = y - x;
+    text = `${x} + ? = ${y}`;
+  } else if(form === 'B'){ // ? + x = y
+    y = randInt(0,100);
+    x = randInt(0,y);
+    correct = y - x;
+    text = `? + ${x} = ${y}`;
+  } else if(form === 'C'){ // ? - x = y => ? = x+y
+    x = randInt(0,100);
+    y = randInt(0,100 - x);
+    correct = x + y;
+    text = `? − ${x} = ${y}`;
+  } else if(form === 'D'){ // y - ? = x => ? = y-x
+    y = randInt(0,100);
+    x = randInt(0,y);
+    correct = y - x;
+    text = `${y} − ? = ${x}`;
+  } else if(form === 'E'){ // x + y = ?
+    x = randInt(0,100);
+    y = randInt(0,100 - x);
+    correct = x + y;
+    text = `${x} + ${y} = ?`;
+  } else { // F: x - y = ?
+    x = randInt(0,100);
+    y = randInt(0,x);
+    correct = x - y;
+    text = `${x} − ${y} = ?`;
+  }
+
+  // Regel für ★★★: nur wenn correct > 50 darf ein 10er vorkommen
+  if(tensRule){
+    const triesMax = 500;
+    let tries = 0;
+
+    while(tries < triesMax){
+      tries++;
+
+      // prüfen ob in x/y ein Zehner vorkommt (Vielfaches von 10, außer 0)
+      const hasTens = (n)=> (n !== 0 && n % 10 === 0);
+      const tensPresent =
+        (typeof x === 'number' && hasTens(x)) ||
+        (typeof y === 'number' && hasTens(y));
+
+      if(correct > 50){
+        // 10er sind ok
+        break;
+      } else {
+        // correct <= 50: keine 10er in den sichtbaren Zahlen
+        if(!tensPresent) break;
+      }
+
+      // neu würfeln
+      // (einfach: neue Aufgabe generieren, bis Regel passt)
+      const regen = genZR100MissingKeypad(false); // erst mal frei generieren
+      // regen liefert Keypad-Aufgabe; wir übernehmen x/y/correct/text aus dem generierten Ausdruck,
+      // aber wir brauchen x/y numerisch. -> darum: direkt neu erzeugen mit gleicher Logik:
+      // => wir rufen uns selbst rekursiv NICHT (wegen Stack), sondern machen schnelle Neu-Generierung:
+      const tmp = genZR100MissingKeypad_raw();
+      x = tmp.x; y = tmp.y; correct = tmp.correct; text = tmp.text;
+    }
   }
 
   return {text, correct, answerType:'keypad'};
+}
+
+/* Helper: rohe Generierung wie oben, aber gibt x/y zurück (für tensRule Loop) */
+function genZR100MissingKeypad_raw(){
+  const forms = ['A','B','C','D','E','F'];
+  const form = forms[randInt(0, forms.length-1)];
+
+  let x,y,correct,text;
+
+  if(form === 'A'){ y = randInt(0,100); x = randInt(0,y); correct = y - x; text = `${x} + ? = ${y}`; }
+  else if(form === 'B'){ y = randInt(0,100); x = randInt(0,y); correct = y - x; text = `? + ${x} = ${y}`; }
+  else if(form === 'C'){ x = randInt(0,100); y = randInt(0,100 - x); correct = x + y; text = `? − ${x} = ${y}`; }
+  else if(form === 'D'){ y = randInt(0,100); x = randInt(0,y); correct = y - x; text = `${y} − ? = ${x}`; }
+  else if(form === 'E'){ x = randInt(0,100); y = randInt(0,100 - x); correct = x + y; text = `${x} + ${y} = ?`; }
+  else { x = randInt(0,100); y = randInt(0,x); correct = x - y; text = `${x} − ${y} = ?`; }
+
+  return {x,y,correct,text};
 }
 
 /* =========================
@@ -1252,9 +1208,7 @@ function genZR100Keypad(){
 function makeMCOptions(correct, count, minV, maxV){
   const set = new Set([correct]);
   const candidates = [];
-  [1,2,3,4,5,10].forEach(d=>{
-    candidates.push(correct + d, correct - d);
-  });
+  [1,2,3,4,5,10].forEach(d=>{ candidates.push(correct + d, correct - d); });
   for(let i=0;i<20;i++){
     const off = randInt(-12,12);
     if(off!==0) candidates.push(correct + off);
